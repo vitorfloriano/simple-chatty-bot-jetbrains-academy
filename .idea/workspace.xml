@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="cccd4348-e7e9-48f8-9ca1-111d4944a2ca" name="Changes" comment="Just practicing a bit.">
+      <change afterPath="$PROJECT_DIR$/Topics/Characters/Compare Latin letters/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Characters/Compare Latin letters/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Characters/Compare Latin letters/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Characters/Comparing numbers and characters/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Characters/Comparing numbers and characters/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Characters/Comparing numbers and characters/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Characters/Operations allowed/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Characters/Operations allowed/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Characters/Operations allowed/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Characters/Sequence/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Characters/Sequence/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Characters/Sequence/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Characters/Theory/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Characters/Theory/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Characters/Theory/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Characters/lesson-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Comments/Forms of comments/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Comments/Forms of comments/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Comments/Forms of comments/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Comments/Hello, Kotlin/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Comments/Hello, Kotlin/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Comments/Hello, Kotlin/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/For loop and ranges/For-loop definitions/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/For loop and ranges/For-loop definitions/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/For loop and ranges/For-loop definitions/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/For loop and ranges/The longest sequence/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/For loop and ranges/The longest sequence/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/For loop and ranges/The longest sequence/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/For loop and ranges/The roots of equation/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/For loop and ranges/The roots of equation/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/For loop and ranges/The roots of equation/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/For loop and ranges/The sum of integers from a to b/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/For loop and ranges/The sum of integers from a to b/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/For loop and ranges/The sum of integers from a to b/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/For loop and ranges/Theory/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/For loop and ranges/Theory/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/For loop and ranges/Theory/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/For loop and ranges/lesson-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Ranges/At least one/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Ranges/At least one/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Ranges/At least one/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Ranges/Check the value (1)/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Ranges/Check the value (1)/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Ranges/Check the value (1)/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Ranges/Check the value/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Ranges/Check the value/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Ranges/Check the value/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Ranges/Not in range/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Ranges/Not in range/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Ranges/Not in range/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Ranges/Theory/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Ranges/Theory/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Ranges/Theory/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Ranges/Within both ranges/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Ranges/Within both ranges/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Ranges/Within both ranges/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Ranges/Working hours/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Ranges/Working hours/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Ranges/Working hours/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Ranges/lesson-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Standard output/First, second, third/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Standard output/First, second, third/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Standard output/First, second, third/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Standard output/Print a triangle/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Standard output/Print a triangle/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Standard output/Print a triangle/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Standard output/Printing texts/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Standard output/Printing texts/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Standard output/Printing texts/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Standard output/Theory/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Standard output/Theory/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Standard output/Theory/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Standard output/We need to learn Kotlin/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Standard output/We need to learn Kotlin/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Standard output/We need to learn Kotlin/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Standard output/lesson-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Working with strings/Correct operations/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Working with strings/Correct operations/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Working with strings/Correct operations/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Working with strings/Extraction of a character/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Working with strings/Extraction of a character/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Working with strings/Extraction of a character/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Working with strings/Last symbol/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Working with strings/Last symbol/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Working with strings/Last symbol/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Working with strings/Name Card/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Working with strings/Name Card/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Working with strings/Name Card/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Working with strings/Theory/task-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Working with strings/Theory/task-remote-info.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Working with strings/Theory/task.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Topics/Working with strings/lesson-info.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/frameworkLessonHistory/storage.storageData" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/frameworkLessonHistory/storage.storageData" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/frameworkLessonHistory/storage.storageRecordIndex" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/frameworkLessonHistory/storage.storageRecordIndex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Simple Chatty Bot (Kotlin)/Chatty Bot welcomes you/task-info.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Simple Chatty Bot (Kotlin)/Chatty Bot welcomes you/task-info.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Simple Chatty Bot (Kotlin)/Guess the age/task-info.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Simple Chatty Bot (Kotlin)/Guess the age/task-info.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Simple Chatty Bot (Kotlin)/Learning numbers/task-info.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Simple Chatty Bot (Kotlin)/Learning numbers/task-info.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Simple Chatty Bot (Kotlin)/Multiple choice/task-info.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Simple Chatty Bot (Kotlin)/Multiple choice/task-info.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Simple Chatty Bot (Kotlin)/Print your name/task-info.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Simple Chatty Bot (Kotlin)/Print your name/task-info.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Simple Chatty Bot (Kotlin)/lesson-info.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Simple Chatty Bot (Kotlin)/lesson-info.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Simple Chatty Bot (Kotlin)/task/src/bot/SimpleBot.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Simple Chatty Bot (Kotlin)/task/src/bot/SimpleBot.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Simple Chatty Bot (Kotlin)/task/test/ChattyBotTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Simple Chatty Bot (Kotlin)/task/test/ChattyBotTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/course-info.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/course-info.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/course-remote-info.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/course-remote-info.yaml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="2OGLDj6FN0YiZdS1lDC6PGfA5zE" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Edu.Yaml.Migrate&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;show.inlinked.gradle.project.popup&quot;: &quot;false&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration default="true" type="Codeforces" factoryName="Codeforces">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="cccd4348-e7e9-48f8-9ca1-111d4944a2ca" name="Changes" comment="" />
+      <created>1681181853736</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1681181853736</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Just practicing a bit.">
+      <created>1681261909448</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1681261909448</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Just practicing a bit.">
+      <created>1681261915751</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1681261915751</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Just practicing a bit.">
+      <created>1681261959069</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1681261959069</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Just practicing a bit.">
+      <created>1681349196931</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1681349196931</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Just practicing a bit.">
+      <created>1681352731354</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1681352731354</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Just practicing a bit.">
+      <created>1681440372005</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1681440372005</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Just practicing a bit.">
+      <created>1681440378918</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1681440378918</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Just practicing a bit.">
+      <created>1681440470118</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1681440470118</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Just practicing a bit.">
+      <created>1681522177266</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1681522177266</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Just practicing a bit.">
+      <created>1681522188897</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1681522188897</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Just practicing a bit.">
+      <created>1681601890563</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1681601890563</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Just practicing a bit.">
+      <created>1681601904824</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1681601904824</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Just practicing a bit.">
+      <created>1681601916063</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1681601916063</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Just practicing a bit.">
+      <created>1681601923965</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1681601923965</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Just practicing a bit.">
+      <created>1681601934028</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1681601934028</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Just practicing a bit.">
+      <created>1681601941808</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1681601941808</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Just practicing a bit.">
+      <created>1681601954819</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1681601954819</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Just practicing a bit.">
+      <created>1681601964587</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1681601964587</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Just practicing a bit.">
+      <created>1681601971687</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1681601971687</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Just practicing a bit.">
+      <created>1681601984130</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1681601984130</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Just practicing a bit.">
+      <created>1681601992312</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1681601992312</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Just practicing a bit.">
+      <created>1681686841243</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1681686841243</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Just practicing a bit.">
+      <created>1681687762663</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1681687762663</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Just practicing a bit.">
+      <created>1681777755518</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1681777755518</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="false" />
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Just practicing a bit." />
+    <option name="LAST_COMMIT_MESSAGE" value="Just practicing a bit." />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

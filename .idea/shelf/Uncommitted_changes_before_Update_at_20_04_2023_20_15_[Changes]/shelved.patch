@@ -1,0 +1,145 @@
+Index: course-info.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>type: hyperskill\ntitle: Simple Chatty Bot (Kotlin)\nlanguage: English\nsummary: \"<p>Here, at the beginning of your programmer’s path, creating a simple console\\\n  \\ chat bot will do wonders to guide you through the basics of coding. During this\\\n  \\ journey you will also play some word and number games that you are going to implement\\\n  \\ all on your own. Pack up and let’s hit the road, my friend!</p><br/><br/>Learn\\\n  \\ more at <a href=\\\"https://hyperskill.org/projects/126?utm_source=ide&utm_medium=ide&utm_campaign=ide&utm_content=project-card\\\"\\\n  >https://hyperskill.org/projects/126</a>\"\nprogramming_language: Kotlin\ncontent:\n- Simple Chatty Bot (Kotlin)\nmode: Study\n
+===================================================================
+diff --git a/course-info.yaml b/course-info.yaml
+--- a/course-info.yaml	
++++ b/course-info.yaml	
+@@ -10,4 +10,5 @@
+ programming_language: Kotlin
+ content:
+ - Simple Chatty Bot (Kotlin)
++- Topics
+ mode: Study
+Index: course-remote-info.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>hyperskill_project:\n  id: 126\n  ide_files: https://stepik.org/media/attachments/lesson/405270/additional_files.json\n  is_template_based: true\n  use_ide: true\nupdate_date: \"Thu, 01 Jan 1970 00:00:00 UTC\"\nstages:\n- id: 668\n  step: 10770\n  is_completed: true\n- id: 669\n  step: 10771\n  is_completed: false\n- id: 670\n  step: 10772\n  is_completed: false\n- id: 671\n  step: 10773\n  is_completed: false\n- id: 672\n  step: 10774\n  is_completed: false\ntopics:\n  0:\n  - title: Introduction to Kotlin\n    theory_id: 4350\n  - title: Basic literals\n    theory_id: 4351\n  - title: Overview of the basic program\n    theory_id: 4362\n  - title: Standard output\n    theory_id: 4425\n  1:\n  - title: Values and variables\n    theory_id: 4371\n  - title: Val variables\n    theory_id: 17408\n  - title: Data types\n    theory_id: 4388\n  - title: Comments\n    theory_id: 4406\n  - title: Coding style conventions\n    theory_id: 4419\n  - title: Naming variables\n    theory_id: 4389\n  - title: Invoking functions\n    theory_id: 4575\n  - title: Standard input with Java Scanner\n    theory_id: 4445\n  2:\n  - title: Binary numbers\n    theory_id: 5544\n  - title: Hexadecimal numbers\n    theory_id: 8788\n  - title: Units of information\n    theory_id: 6865\n  - title: The classification of basic types\n    theory_id: 4455\n  - title: Type conversion\n    theory_id: 4672\n  - title: Reading data with a readln\n    theory_id: 11224\n  - title: String basics\n    theory_id: 12553\n  - title: String templates\n    theory_id: 4547\n  - title: Boolean and logical operations\n    theory_id: 4515\n  - title: Arithmetic operations\n    theory_id: 4472\n  - title: Type of the numeric expression\n    theory_id: 9506\n  - title: Increment and decrement\n    theory_id: 10776\n  - title: Integers in action\n    theory_id: 4488\n  - title: Relational operators\n    theory_id: 4525\n  - title: Unicode\n    theory_id: 7899\n  - title: Characters\n    theory_id: 4680\n  - title: Working with strings\n    theory_id: 12561\n  3:\n  - title: If expression\n    theory_id: 4625\n  - title: Repeating blocks\n    theory_id: 4643\n  - title: Ranges\n    theory_id: 4633\n  - title: For loop and ranges\n    theory_id: 4652\n  4:\n  - title: Declaring functions\n    theory_id: 4580\n  - title: While loops\n    theory_id: 4659\n
+===================================================================
+diff --git a/course-remote-info.yaml b/course-remote-info.yaml
+--- a/course-remote-info.yaml	
++++ b/course-remote-info.yaml	
+@@ -3,20 +3,20 @@
+   ide_files: https://stepik.org/media/attachments/lesson/405270/additional_files.json
+   is_template_based: true
+   use_ide: true
+-update_date: "Thu, 01 Jan 1970 00:00:00 UTC"
++update_date: "Thu, 20 Apr 2023 23:11:48 UTC"
+ stages:
+ - id: 668
+   step: 10770
+   is_completed: true
+ - id: 669
+   step: 10771
+-  is_completed: false
++  is_completed: true
+ - id: 670
+   step: 10772
+-  is_completed: false
++  is_completed: true
+ - id: 671
+   step: 10773
+-  is_completed: false
++  is_completed: true
+ - id: 672
+   step: 10774
+   is_completed: false
+Index: Simple Chatty Bot (Kotlin)/Chatty Bot welcomes you/task-info.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>type: edu\nfiles:\n- name: src/bot/SimpleBot.kt\n  visible: true\n  text: |\n    package bot\n\n    fun main() {\n        // write your code here\n    }\n  learner_created: false\n- name: test/ChattyBotTest.java\n  visible: false\n  text: |\n    import org.hyperskill.hstest.stage.StageTest;\n    import org.hyperskill.hstest.testcase.CheckResult;\n    import org.hyperskill.hstest.testcase.TestCase;\n\n    import java.util.Collections;\n    import java.util.List;\n\n\n    public class ChattyBotTest extends StageTest<Object> {\n\n        @Override\n        public List<TestCase<Object>> generate() {\n            return Collections.singletonList(\n                new TestCase<>()\n            );\n        }\n\n        @Override\n        public CheckResult check(String reply, Object clue) {\n\n            String[] lines = reply.trim().split(\"\\n\");\n\n            if (lines.length != 2) {\n                return CheckResult.wrong(\n                    \"You should output exactly 2 lines!\\n\" +\n                    \"Lines found: \" + lines.length\n                );\n            }\n\n            String secondLine = lines[1];\n\n            if (!secondLine.matches(\".*\\\\d.*\")) {\n                return CheckResult.wrong(\n                    \"The second line should contain a year!\\n\" +\n                    \"Your second line: \\\"\" + secondLine + \"\\\"\"\n                );\n            }\n\n            return CheckResult.correct();\n        }\n    }\n  learner_created: false\nfeedback_link: https://hyperskill.org/projects/126/stages/668/implement#comment\nstatus: Solved\nrecord: 1\n
+===================================================================
+diff --git a/Simple Chatty Bot (Kotlin)/Chatty Bot welcomes you/task-info.yaml b/Simple Chatty Bot (Kotlin)/Chatty Bot welcomes you/task-info.yaml
+--- a/Simple Chatty Bot (Kotlin)/Chatty Bot welcomes you/task-info.yaml	
++++ b/Simple Chatty Bot (Kotlin)/Chatty Bot welcomes you/task-info.yaml	
+@@ -54,6 +54,9 @@
+         }
+     }
+   learner_created: false
+-feedback_link: https://hyperskill.org/projects/126/stages/668/implement#comment
++feedback_link: https://hyperskill.org/learn/step/10770#comment
+ status: Solved
++feedback:
++  message: Congratulations!
++  time: "Tue, 11 Apr 2023 03:01:16 UTC"
+ record: 1
+Index: Simple Chatty Bot (Kotlin)/Print your name/task-info.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>type: edu\nfiles:\n- name: src/bot/SimpleBot.kt\n  visible: true\n  text: |\n    package bot\n\n    import java.util.Scanner\n\n\n    fun main() {\n        val scanner = Scanner(System.`in`)\n\n        println(\"Hello! My name is Aid.\")\n        println(\"I was created in 2020.\")\n        println(\"Please, remind me your name.\")\n\n        // reading a name\n\n        println(\"What a great name you have, {yourName}!\")\n    }\n  learner_created: false\n- name: test/ChattyBotTest.java\n  visible: false\n  text: |\n    import org.hyperskill.hstest.stage.StageTest;\n    import org.hyperskill.hstest.testcase.CheckResult;\n    import org.hyperskill.hstest.testcase.TestCase;\n\n    import java.util.Arrays;\n    import java.util.List;\n\n    public class ChattyBotTest extends StageTest<String> {\n\n        @Override\n        public List<TestCase<String>> generate() {\n            return Arrays.asList(\n                new TestCase<String>()\n                    .setInput(\"John\")\n                    .setAttach(\"John\"),\n\n                new TestCase<String>()\n                    .setInput(\"Nick\")\n                    .setAttach(\"Nick\")\n            );\n        }\n\n        @Override\n        public CheckResult check(String reply, String clue) {\n\n            String[] lines = reply.trim().split(\"\\n\");\n\n            if (lines.length != 4) {\n                return CheckResult.wrong(\n                    \"You should output 4 lines. \" +\n                        \"Lines found: \" + lines.length + \"\\n\" +\n                        \"Your output:\\n\" +\n                        reply\n                );\n            }\n\n            String lineWithName = lines[3].toLowerCase();\n            String name = clue.toLowerCase();\n\n            if (!lineWithName.contains(name)) {\n                return CheckResult.wrong(\n                    \"The name was \" + clue + \"\\n\" +\n                        \"But the 4-th line was:\\n\" +\n                        \"\\\"\" + lines[3] + \"\\\"\\n\\n\" +\n                        \"4-th line should contain a name of the user\"\n                );\n            }\n\n            return CheckResult.correct();\n        }\n\n    }\n  learner_created: false\nfeedback_link: https://hyperskill.org/projects/126/stages/669/implement#comment\nstatus: Failed\nrecord: -1\n
+===================================================================
+diff --git a/Simple Chatty Bot (Kotlin)/Print your name/task-info.yaml b/Simple Chatty Bot (Kotlin)/Print your name/task-info.yaml
+--- a/Simple Chatty Bot (Kotlin)/Print your name/task-info.yaml	
++++ b/Simple Chatty Bot (Kotlin)/Print your name/task-info.yaml	
+@@ -76,6 +76,9 @@
+ 
+     }
+   learner_created: false
+-feedback_link: https://hyperskill.org/projects/126/stages/669/implement#comment
+-status: Failed
+-record: -1
++feedback_link: https://hyperskill.org/learn/step/10771#comment
++status: Solved
++feedback:
++  message: Congratulations!
++  time: "Thu, 13 Apr 2023 01:25:11 UTC"
++record: 2
+Index: Simple Chatty Bot (Kotlin)/Guess the age/task-info.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>type: edu\nfiles:\n- name: src/bot/SimpleBot.kt\n  visible: true\n  text: |\n    package bot\n\n    import java.util.Scanner\n\n\n    fun main() {\n        val scanner = Scanner(System.`in`)\n\n        println(\"Hello! My name is Aid.\")\n        println(\"I was created in 2020.\")\n        println(\"Please, remind me your name.\")\n\n        val name = scanner.nextLine()\n\n        println(\"What a great name you have, \" + name + \"!\")\n        println(\"Let me guess your age.\")\n        println(\"Enter remainders of dividing your age by 3, 5 and 7.\")\n\n        // reading all remainders\n\n        println(\"Your age is {yourAge}; that's a good time to start programming!\")\n    }\n  learner_created: false\n- name: test/ChattyBotTest.java\n  visible: false\n  text: |\n    import org.hyperskill.hstest.stage.StageTest;\n    import org.hyperskill.hstest.testcase.CheckResult;\n    import org.hyperskill.hstest.testcase.TestCase;\n\n    import java.util.Arrays;\n    import java.util.List;\n\n\n    class Clue {\n        int age;\n        String name;\n\n        Clue(String name, int age) {\n            this.age = age;\n            this.name = name;\n        }\n    }\n\n\n    public class ChattyBotTest extends StageTest<Clue> {\n\n        @Override\n        public List<TestCase<Clue>> generate() {\n            return Arrays.asList(\n                new TestCase<Clue>()\n                    .setInput(\"John\\n1\\n2\\n1\")\n                    .setAttach(new Clue(\"John\", 22)),\n\n                new TestCase<Clue>()\n                    .setInput(\"Nick\\n2\\n0\\n0\")\n                    .setAttach(new Clue(\"Nick\", 35))\n            );\n        }\n\n        @Override\n        public CheckResult check(String reply, Clue clue) {\n\n            String[] lines = reply.trim().split(\"\\n\");\n\n            if (lines.length != 7) {\n                return CheckResult.wrong(\n                    \"You should output 7 lines. Lines found: \" + lines.length + \"\\n\" +\n                        \"Your output:\\n\" +\n                        reply\n                );\n            }\n\n            String lineWithName = lines[3].toLowerCase();\n            String name = clue.name.toLowerCase();\n\n            if (!lineWithName.contains(name)) {\n                return CheckResult.wrong(\n                    \"The name was \" + clue.name + \"\\n\" +\n                        \"But the 4-th line was:\\n\" +\n                        \"\\\"\" + lines[3] + \"\\\"\\n\\n\" +\n                        \"4-th line should contain a name of the user\"\n                );\n            }\n\n            String lineWithAge = lines[6].toLowerCase();\n            String age = Integer.toString(clue.age);\n\n            if (!lineWithAge.contains(age)) {\n                return CheckResult.wrong(\n                    \"Can't find a correct age \" +\n                        \"in the last line of output! \" +\n                        \"Maybe you calculated the age wrong?\\n\\n\" +\n                        \"Your last line: \\n\" + \"\\\"\" + lines[6] + \"\\\"\"\n                );\n            }\n\n            return CheckResult.correct();\n        }\n\n    }\n  learner_created: false\nfeedback_link: https://hyperskill.org/projects/126/stages/670/implement#comment\nstatus: Unchecked\nrecord: -1\n
+===================================================================
+diff --git a/Simple Chatty Bot (Kotlin)/Guess the age/task-info.yaml b/Simple Chatty Bot (Kotlin)/Guess the age/task-info.yaml
+--- a/Simple Chatty Bot (Kotlin)/Guess the age/task-info.yaml	
++++ b/Simple Chatty Bot (Kotlin)/Guess the age/task-info.yaml	
+@@ -105,6 +105,9 @@
+ 
+     }
+   learner_created: false
+-feedback_link: https://hyperskill.org/projects/126/stages/670/implement#comment
+-status: Unchecked
+-record: -1
++feedback_link: https://hyperskill.org/learn/step/10772#comment
++status: Solved
++feedback:
++  message: Congratulations!
++  time: "Sat, 15 Apr 2023 01:28:53 UTC"
++record: 3
+Index: Simple Chatty Bot (Kotlin)/Learning numbers/task-info.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>type: edu\nfiles:\n- name: src/bot/SimpleBot.kt\n  visible: true\n  text: |\n    package bot\n\n    import java.util.Scanner\n\n\n    fun main() {\n        val scanner = Scanner(System.`in`)\n\n        println(\"Hello! My name is Aid.\")\n        println(\"I was created in 2020.\")\n        println(\"Please, remind me your name.\")\n\n        val name = scanner.nextLine()\n\n        println(\"What a great name you have, \" + name + \"!\")\n        println(\"Let me guess your age.\")\n        println(\"Enter remainders of dividing your age by 3, 5 and 7.\")\n\n        val rem3 = scanner.nextInt()\n        val rem5 = scanner.nextInt()\n        val rem7 = scanner.nextInt()\n        val age = (rem3 * 70 + rem5 * 21 + rem7 * 15) % 105\n\n        println(\"Your age is \" + age + \"; that's a good time to start programming!\")\n        println(\"Now I will prove to you that I can count to any number you want.\")\n\n        // read a number and count to it here\n\n        println(\"Completed, have a nice day!\")\n    }\n  learner_created: false\n- name: test/ChattyBotTest.java\n  visible: false\n  text: |\n    import org.hyperskill.hstest.stage.StageTest;\n    import org.hyperskill.hstest.testcase.CheckResult;\n    import org.hyperskill.hstest.testcase.TestCase;\n\n    import java.util.Collections;\n    import java.util.List;\n\n\n    class Clue {\n        int age;\n        String name;\n        int count;\n\n        Clue(String name, int age, int count) {\n            this.age = age;\n            this.name = name;\n            this.count = count;\n        }\n    }\n\n\n    public class ChattyBotTest extends StageTest<Clue> {\n\n        @Override\n        public List<TestCase<Clue>> generate() {\n            return Collections.singletonList(\n                new TestCase<Clue>()\n                    .setInput(\"Marry\\n1\\n0\\n5\\n10\")\n                    .setAttach(new Clue(\"Marry\", 40, 10))\n            );\n        }\n\n        @Override\n        public CheckResult check(String reply, Clue clue) {\n\n            String[] lines = reply.trim().split(\"\\n\");\n\n            int length = 9 + clue.count + 1;\n\n            if (lines.length != length) {\n                return CheckResult.wrong(\n                    \"You should output \" + length + \" lines \" +\n                        \"(for the count number \" + clue.count +\").\\n\" +\n                        \"Lines found: \" + lines.length + \"\\n\" +\n                        \"Your output:\\n\" +\n                        reply\n                );\n            }\n\n            String lineWithName = lines[3].toLowerCase();\n            String name = clue.name.toLowerCase();\n\n            if (!lineWithName.contains(name)) {\n                return CheckResult.wrong(\n                    \"The name was \" + clue.name + \"\\n\" +\n                        \"But the 4-th line was:\\n\" +\n                        \"\\\"\" + lines[3] + \"\\\"\\n\\n\" +\n                        \"4-th line should contain a name of the user\"\n                );\n            }\n\n            String lineWithAge = lines[6].toLowerCase();\n            String age = Integer.toString(clue.age);\n\n            if (!lineWithAge.contains(age)) {\n                return CheckResult.wrong(\n                    \"Can't find a correct age \" +\n                        \"in the last line of output! \" +\n                        \"Maybe you calculated the age wrong?\\n\\n\" +\n                        \"Your last line: \\n\" + \"\\\"\" + lines[6] + \"\\\"\"\n                );\n            }\n\n            for (int i = 0; i < clue.count + 1; i++) {\n                String numLine = lines[i + 8];\n                String actualNum = i + \"!\";\n\n                if (!numLine.equals(actualNum)) {\n                    return CheckResult.wrong(\n                        \"Expected \" + (i+8) + \"-th line: \\n\" +\n                            \"\\\"\" + actualNum + \"\\\"\\n\" +\n                            \"Your \"+ (i+8) + \"-th line: \\n\" +\n                            \"\\\"\" + numLine + \"\\\"\"\n                    );\n                }\n            }\n\n            return CheckResult.correct();\n        }\n\n    }\n  learner_created: false\nfeedback_link: https://hyperskill.org/projects/126/stages/671/implement#comment\nstatus: Unchecked\nrecord: -1\n
+===================================================================
+diff --git a/Simple Chatty Bot (Kotlin)/Learning numbers/task-info.yaml b/Simple Chatty Bot (Kotlin)/Learning numbers/task-info.yaml
+--- a/Simple Chatty Bot (Kotlin)/Learning numbers/task-info.yaml	
++++ b/Simple Chatty Bot (Kotlin)/Learning numbers/task-info.yaml	
+@@ -129,6 +129,9 @@
+ 
+     }
+   learner_created: false
+-feedback_link: https://hyperskill.org/projects/126/stages/671/implement#comment
+-status: Unchecked
+-record: -1
++feedback_link: https://hyperskill.org/learn/step/10773#comment
++status: Solved
++feedback:
++  message: Congratulations!
++  time: "Sun, 16 Apr 2023 23:28:15 UTC"
++record: 4
+Index: Simple Chatty Bot (Kotlin)/Multiple choice/task-info.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>type: edu\nfiles:\n- name: src/bot/SimpleBot.kt\n  visible: true\n  text: |\n    package bot\n\n    import java.util.Scanner\n\n\n    val scanner = Scanner(System.`in`) // Do not change this line\n\n    fun main() {\n        greet(\"Aid\", \"2020\") // change it as you need\n        remindName()\n        guessAge()\n        count()\n        // ...\n        end()\n    }\n\n    fun greet(assistantName: String, birthYear: String) {\n        println(\"Hello! My name is ${assistantName}.\")\n        println(\"I was created in ${birthYear}.\")\n        println(\"Please, remind me your name.\")\n    }\n\n    fun remindName() {\n        val name = scanner.nextLine()\n        println(\"What a great name you have, ${name}!\")\n    }\n\n    fun guessAge() {\n        println(\"Let me guess your age.\")\n        println(\"Enter remainders of dividing your age by 3, 5 and 7.\")\n        val rem3 = scanner.nextInt()\n        val rem5 = scanner.nextInt()\n        val rem7 = scanner.nextInt()\n        val age = (rem3 * 70 + rem5 * 21 + rem7 * 15) % 105\n        println(\"Your age is ${age}; that's a good time to start programming!\")\n    }\n\n    fun count() {\n        println(\"Now I will prove to you that I can count to any number you want.\")\n        val num = scanner.nextInt()\n        for (i in 0..num) {\n            print(i)\n            println(\"!\")\n        }\n    }\n\n    fun test() {\n        println(\"Let's test your programming knowledge.\")\n        // write your code here\n    }\n\n    fun end() {\n        println(\"Congratulations, have a nice day!\") // Do not change this text\n    }\n  learner_created: false\n- name: test/ChattyBotTest.java\n  visible: false\n  text: |\n    import org.hyperskill.hstest.stage.StageTest;\n    import org.hyperskill.hstest.testcase.CheckResult;\n    import org.hyperskill.hstest.testcase.TestCase;\n\n    import java.util.Collections;\n    import java.util.List;\n\n\n    class Clue {\n        int age;\n        String name;\n        int count;\n\n        Clue(String name, int age, int count) {\n            this.age = age;\n            this.name = name;\n            this.count = count;\n        }\n    }\n\n\n    public class ChattyBotTest extends StageTest<Clue> {\n\n        @Override\n        public List<TestCase<Clue>> generate() {\n            String input = \"Marry\\n1\\n0\\n5\\n10\";\n\n            for (int i = 1; i < 9; i++) {\n                input += \"\\n\" + i;\n            }\n\n            return Collections.singletonList(\n                new TestCase<Clue>()\n                    .setInput(input)\n                    .setAttach(new Clue(\"Marry\", 40, 10))\n            );\n        }\n\n        @Override\n        public CheckResult check(String reply, Clue clue) {\n\n            String[] lines = reply.trim().split(\"\\n\");\n\n            int length = 9 + clue.count + 1;\n\n            if (lines.length <= length) {\n                return CheckResult.wrong(\n                    \"You should output at least \" + (length + 1) + \" lines \" +\n                        \"(for the count number \" + clue.count +\").\\n\" +\n                        \"Lines found: \" + lines.length + \"\\n\" +\n                        \"Your output:\\n\" +\n                        reply\n                );\n            }\n\n            String lineWithName = lines[3].toLowerCase();\n            String name = clue.name.toLowerCase();\n\n            if (!lineWithName.contains(name)) {\n                return CheckResult.wrong(\n                    \"The name was \" + clue.name + \"\\n\" +\n                        \"But the 4-th line was:\\n\" +\n                        \"\\\"\" + lines[3] + \"\\\"\\n\\n\" +\n                        \"4-th line should contain a name of the user\"\n                );\n            }\n\n            String lineWithAge = lines[6].toLowerCase();\n            String age = Integer.toString(clue.age);\n\n            if (!lineWithAge.contains(age)) {\n                return CheckResult.wrong(\n                    \"Can't find a correct age \" +\n                        \"in the last line of output! \" +\n                        \"Maybe you calculated the age wrong?\\n\\n\" +\n                        \"Your last line: \\n\" + \"\\\"\" + lines[6] + \"\\\"\"\n                );\n            }\n\n            for (int i = 0; i < clue.count + 1; i++) {\n                String numLine = lines[i + 8];\n                String actualNum = i + \"!\";\n\n                if (!numLine.equals(actualNum)) {\n                    return CheckResult.wrong(\n                        \"Expected \" + (i+8) + \"-th line: \\n\" +\n                            \"\\\"\" + actualNum + \"\\\"\\n\" +\n                            \"Your \"+ (i+8) + \"-th line: \\n\" +\n                            \"\\\"\" + numLine + \"\\\"\"\n                    );\n                }\n            }\n\n            String lastLine = lines[lines.length - 1];\n\n            if (!lastLine.equals(\"Congratulations, have a nice day!\")) {\n                return CheckResult.wrong(\n                    \"Your last line should be:\\n\" +\n                        \"\\\"Congratulations, have a nice day!\\\"\\n\" +\n                        \"Found:\\n\" +\n                        \"\\\"\" + lastLine + \"\\\"\"\n                );\n            }\n\n            return CheckResult.correct();\n        }\n\n    }\n  learner_created: false\nfeedback_link: https://hyperskill.org/projects/126/stages/672/implement#comment\nstatus: Unchecked\nrecord: -1\n
+===================================================================
+diff --git a/Simple Chatty Bot (Kotlin)/Multiple choice/task-info.yaml b/Simple Chatty Bot (Kotlin)/Multiple choice/task-info.yaml
+--- a/Simple Chatty Bot (Kotlin)/Multiple choice/task-info.yaml	
++++ b/Simple Chatty Bot (Kotlin)/Multiple choice/task-info.yaml	
+@@ -170,6 +170,6 @@
+ 
+     }
+   learner_created: false
+-feedback_link: https://hyperskill.org/projects/126/stages/672/implement#comment
++feedback_link: https://hyperskill.org/learn/step/10774#comment
+ status: Unchecked
+ record: -1

@@ -1,0 +1,1812 @@
+Index: Simple Chatty Bot (Kotlin)/task/test/ChattyBotTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import org.hyperskill.hstest.stage.StageTest;\nimport org.hyperskill.hstest.testcase.CheckResult;\nimport org.hyperskill.hstest.testcase.TestCase;\n\nimport java.util.Arrays;\nimport java.util.List;\n\npublic class ChattyBotTest extends StageTest<String> {\n\n    @Override\n    public List<TestCase<String>> generate() {\n        return Arrays.asList(\n            new TestCase<String>()\n                .setInput(\"John\")\n                .setAttach(\"John\"),\n\n            new TestCase<String>()\n                .setInput(\"Nick\")\n                .setAttach(\"Nick\")\n        );\n    }\n\n    @Override\n    public CheckResult check(String reply, String clue) {\n\n        String[] lines = reply.trim().split(\"\\n\");\n\n        if (lines.length != 4) {\n            return CheckResult.wrong(\n                \"You should output 4 lines. \" +\n                    \"Lines found: \" + lines.length + \"\\n\" +\n                    \"Your output:\\n\" +\n                    reply\n            );\n        }\n\n        String lineWithName = lines[3].toLowerCase();\n        String name = clue.toLowerCase();\n\n        if (!lineWithName.contains(name)) {\n            return CheckResult.wrong(\n                \"The name was \" + clue + \"\\n\" +\n                    \"But the 4-th line was:\\n\" +\n                    \"\\\"\" + lines[3] + \"\\\"\\n\\n\" +\n                    \"4-th line should contain a name of the user\"\n            );\n        }\n\n        return CheckResult.correct();\n    }\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Simple Chatty Bot (Kotlin)/task/test/ChattyBotTest.java b/Simple Chatty Bot (Kotlin)/task/test/ChattyBotTest.java
+--- a/Simple Chatty Bot (Kotlin)/task/test/ChattyBotTest.java	
++++ b/Simple Chatty Bot (Kotlin)/task/test/ChattyBotTest.java	
+@@ -2,32 +2,51 @@
+ import org.hyperskill.hstest.testcase.CheckResult;
+ import org.hyperskill.hstest.testcase.TestCase;
+ 
+-import java.util.Arrays;
++import java.util.Collections;
+ import java.util.List;
+ 
+-public class ChattyBotTest extends StageTest<String> {
++
++class Clue {
++    int age;
++    String name;
++    int count;
++
++    Clue(String name, int age, int count) {
++        this.age = age;
++        this.name = name;
++        this.count = count;
++    }
++}
++
++
++public class ChattyBotTest extends StageTest<Clue> {
+ 
+     @Override
+-    public List<TestCase<String>> generate() {
+-        return Arrays.asList(
+-            new TestCase<String>()
+-                .setInput("John")
+-                .setAttach("John"),
++    public List<TestCase<Clue>> generate() {
++        String input = "Marry\n1\n0\n5\n10";
+ 
+-            new TestCase<String>()
+-                .setInput("Nick")
+-                .setAttach("Nick")
++        for (int i = 1; i < 9; i++) {
++            input += "\n" + i;
++        }
++
++        return Collections.singletonList(
++            new TestCase<Clue>()
++                .setInput(input)
++                .setAttach(new Clue("Marry", 40, 10))
+         );
+     }
+ 
+     @Override
+-    public CheckResult check(String reply, String clue) {
++    public CheckResult check(String reply, Clue clue) {
+ 
+         String[] lines = reply.trim().split("\n");
+ 
+-        if (lines.length != 4) {
++        int length = 9 + clue.count + 1;
++
++        if (lines.length <= length) {
+             return CheckResult.wrong(
+-                "You should output 4 lines. " +
++                "You should output at least " + (length + 1) + " lines " +
++                    "(for the count number " + clue.count +").\n" +
+                     "Lines found: " + lines.length + "\n" +
+                     "Your output:\n" +
+                     reply
+@@ -35,17 +54,54 @@
+         }
+ 
+         String lineWithName = lines[3].toLowerCase();
+-        String name = clue.toLowerCase();
++        String name = clue.name.toLowerCase();
+ 
+         if (!lineWithName.contains(name)) {
+             return CheckResult.wrong(
+-                "The name was " + clue + "\n" +
++                "The name was " + clue.name + "\n" +
+                     "But the 4-th line was:\n" +
+                     "\"" + lines[3] + "\"\n\n" +
+                     "4-th line should contain a name of the user"
+             );
+         }
+ 
++        String lineWithAge = lines[6].toLowerCase();
++        String age = Integer.toString(clue.age);
++
++        if (!lineWithAge.contains(age)) {
++            return CheckResult.wrong(
++                "Can't find a correct age " +
++                    "in the last line of output! " +
++                    "Maybe you calculated the age wrong?\n\n" +
++                    "Your last line: \n" + "\"" + lines[6] + "\""
++            );
++        }
++
++        for (int i = 0; i < clue.count + 1; i++) {
++            String numLine = lines[i + 8];
++            String actualNum = i + "!";
++
++            if (!numLine.equals(actualNum)) {
++                return CheckResult.wrong(
++                    "Expected " + (i+8) + "-th line: \n" +
++                        "\"" + actualNum + "\"\n" +
++                        "Your "+ (i+8) + "-th line: \n" +
++                        "\"" + numLine + "\""
++                );
++            }
++        }
++
++        String lastLine = lines[lines.length - 1];
++
++        if (!lastLine.equals("Congratulations, have a nice day!")) {
++            return CheckResult.wrong(
++                "Your last line should be:\n" +
++                    "\"Congratulations, have a nice day!\"\n" +
++                    "Found:\n" +
++                    "\"" + lastLine + "\""
++            );
++        }
++
+         return CheckResult.correct();
+     }
+ 
+Index: Topics/Working with strings/Theory/task.html
+===================================================================
+diff --git a/Topics/Working with strings/Theory/task.html b/Topics/Working with strings/Theory/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Working with strings/Theory/task.html	
+@@ -0,0 +1,47 @@
++<h2>Working with strings</h2>
++<div class="step-text">
++<p>A string is just a sequence of characters enclosed in double-quotes. In Kotlin, strings are represented by the <code class="language-kotlin">String</code> type. It is one of the most widely used data types in practice. In this topic, we will learn some operations with strings.</p>
++<h5 id="accessing-characters" style="text-align: center;">Accessing characters</h5>
++<p>The elements of a string are individual characters that can be accessed by their index. The first element of a string has an index of <span class="math-tex">\(0\)</span>.</p>
++<pre><code class="language-kotlin">val greeting = "Hello"
++
++val first = greeting[0]  // 'H'
++val second = greeting[1] // 'e'
++val five = greeting[4]   // 'o'</code></pre>
++<p>The last element has the index that equals the length of the string minus 1. For the string <code class="language-kotlin">"Hello"</code>, the last element is <code class="language-kotlin">'o'</code>. Its index is 4 because the string's length is 5.</p>
++<pre><code class="language-kotlin">val last = greeting[greeting.length - 1] // 'o'
++val prelast = greeting[greeting.length - 2] // 'l'</code></pre>
++<p>Kotlin provides several convenient ways to access the first and the last character of a string:</p>
++<pre><code class="language-kotlin">println(greeting.first())   // 'H'
++println(greeting.last())    // 'o'
++println(greeting.lastIndex) // 4</code></pre>
++<p>You can use this feature to write more readable code.</p>
++<h5 id="empty-string" style="text-align: center;">Empty string</h5>
++<p>Sometimes you need a fast way to check if the <code class="language-kotlin">String</code> is empty. For example, you need the first element of the string and want to check for its existence. Of course, you can use the length and check if it's greater than 0. But a much more elegant way is using the function <code class="language-kotlin">isEmpty()</code>:</p>
++<pre><code class="language-kotlin">val emptyString = ""
++println(emptyString.length == 0) //true
++println(emptyString.isEmpty()) //true</code></pre>
++<h5 id="immutability" style="text-align: center;">Immutability</h5>
++<p>Strings are <strong>immutable</strong>,<strong> </strong>meaning that once created, the string stays the same. You cannot modify an element of a string. So, the example below would not work:</p>
++<pre><code class="language-kotlin">val valString = "string"
++valString[3] = 'o' // an error here!
++var varString = "string"
++varString[3] = 'o' // an error here too!</code></pre>
++<p>If you need to change the string, you can reassign it:</p>
++<pre><code class="language-kotlin">var varString = "string"
++varString = "strong" // legal
++val valString = "string"
++valString = "strong" // error, you cannot reassign val</code></pre>
++<p>Actually, we do not modify the stored value in the <code class="language-kotlin">varString</code> variable. Instead, we assign a new value to it. So, it is absolutely legal. This is one of the ways to work with strings. If you need to modify a string, just create a new one.</p>
++<h5 id="comparing-strings" style="text-align: center;"> Comparing strings</h5>
++<p>To compare two strings, use <code class="language-kotlin">==</code> (equals) and <code class="language-kotlin">!=</code> (not equals) operators. Both operators take two strings as their operands and return a value of the <code class="language-kotlin">Boolean</code> type (<code class="language-kotlin">true</code> or <code class="language-kotlin">false</code>).</p>
++<pre><code class="language-kotlin">val first = "first"
++val second = "second"
++var str = "first"
++
++println(first == str)    // true
++println(first == second) // false
++println(first != second) // true</code></pre>
++<h5 id="conclusion" style="text-align: center;">Conclusion</h5>
++<p>In this topic, you learned how to get a single character from a string and how to compare strings. Remember that strings are immutable, and in order to change a string, you need to reassign it. Good luck with your tasks, and have a nice Kotlin!</p>
++</div>
+Index: Topics/Working with strings/lesson-info.yaml
+===================================================================
+diff --git a/Topics/Working with strings/lesson-info.yaml b/Topics/Working with strings/lesson-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Working with strings/lesson-info.yaml	
+@@ -0,0 +1,6 @@
++content:
++- Correct operations
++- Theory
++- Name Card
++- Last symbol
++- Extraction of a character
+Index: Topics/Characters/lesson-info.yaml
+===================================================================
+diff --git a/Topics/Characters/lesson-info.yaml b/Topics/Characters/lesson-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Characters/lesson-info.yaml	
+@@ -0,0 +1,6 @@
++content:
++- Theory
++- Operations allowed
++- Compare Latin letters
++- Sequence
++- Comparing numbers and characters
+Index: Topics/Ranges/lesson-info.yaml
+===================================================================
+diff --git a/Topics/Ranges/lesson-info.yaml b/Topics/Ranges/lesson-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Ranges/lesson-info.yaml	
+@@ -0,0 +1,8 @@
++content:
++- Theory
++- Check the value
++- Check the value (1)
++- At least one
++- Not in range
++- Working hours
++- Within both ranges
+Index: Topics/Comments/Forms of comments/task-info.yaml
+===================================================================
+diff --git a/Topics/Comments/Forms of comments/task-info.yaml b/Topics/Comments/Forms of comments/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Comments/Forms of comments/task-info.yaml	
+@@ -0,0 +1,23 @@
++type: choice
++is_multiple_choice: true
++options:
++- text: / My name is end-of line comment!
++- text: "// No, I am an end-of line comment!"
++- text: /* I am a comment too */
++- text: "* And me, me! I am a comment *"
++- text: "/** And I am a doc comment, nice to meet you */ "
++- text: "/*/* Don't trust them, I am a doc comment! *//"
++files:
++- name: src/Main.kt
++  visible: true
++  text: |
++    // You can experiment here, it won’t be checked
++
++    fun main(args: Array<String>) {
++      // put your code here
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/4410#comment
++status: Solved
++record: -1
++local_check: false
+Index: Topics/Comments/Forms of comments/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/Comments/Forms of comments/task-remote-info.yaml b/Topics/Comments/Forms of comments/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Comments/Forms of comments/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 4410
++update_date: "Tue, 04 Jan 2022 09:30:28 UTC"
+Index: Topics/Working with strings/Extraction of a character/task.html
+===================================================================
+diff --git a/Topics/Working with strings/Extraction of a character/task.html b/Topics/Working with strings/Extraction of a character/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Working with strings/Extraction of a character/task.html	
+@@ -0,0 +1,4 @@
++<h2>Extraction of a character</h2>
++<div class="step-text">
++<p></p><p>Which brackets are used for extracting a character from a string?</p>
++</div>
+Index: Topics/Comments/Hello, Kotlin/task-info.yaml
+===================================================================
+diff --git a/Topics/Comments/Hello, Kotlin/task-info.yaml b/Topics/Comments/Hello, Kotlin/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Comments/Hello, Kotlin/task-info.yaml	
+@@ -0,0 +1,19 @@
++type: code
++files:
++- name: src/Main.kt
++  visible: true
++  text: |-
++    fun main() {
++        print("Hello, ")
++        print("world")
++        print(" and ")
++        print("Kotlin")
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/4413#comment
++status: Solved
++feedback:
++  message: <html>Correct solution</html>
++  time: "Wed, 12 Apr 2023 01:10:53 UTC"
++record: -1
++submission_language: kotlin
+Index: Topics/Comments/Hello, Kotlin/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/Comments/Hello, Kotlin/task-remote-info.yaml b/Topics/Comments/Hello, Kotlin/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Comments/Hello, Kotlin/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 4413
++update_date: "Fri, 14 Jan 2022 19:47:55 UTC"
+Index: Topics/Working with strings/Correct operations/task-info.yaml
+===================================================================
+diff --git a/Topics/Working with strings/Correct operations/task-info.yaml b/Topics/Working with strings/Correct operations/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Working with strings/Correct operations/task-info.yaml	
+@@ -0,0 +1,21 @@
++type: choice
++is_multiple_choice: true
++options:
++- text: s1 == s2
++- text: s1 * 5
++- text: s1 + s2
++- text: s1 - s2
++files:
++- name: src/Main.kt
++  visible: true
++  text: |
++    // You can experiment here, it won’t be checked
++
++    fun main(args: Array<String>) {
++      // put your code here
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/4543#comment
++status: Solved
++record: -1
++local_check: false
+Index: Topics/Working with strings/Correct operations/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/Working with strings/Correct operations/task-remote-info.yaml b/Topics/Working with strings/Correct operations/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Working with strings/Correct operations/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 4543
++update_date: "Thu, 09 Feb 2023 15:19:31 UTC"
+Index: Topics/Working with strings/Theory/task-info.yaml
+===================================================================
+diff --git a/Topics/Working with strings/Theory/task-info.yaml b/Topics/Working with strings/Theory/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Working with strings/Theory/task-info.yaml	
+@@ -0,0 +1,15 @@
++type: theory
++files:
++- name: src/Main.kt
++  visible: true
++  text: |
++    // You can experiment here, it won’t be checked
++
++    fun main(args: Array<String>) {
++      // put your code here
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/12561#comment
++status: Solved
++record: -1
++post_submission_on_open: true
+Index: Topics/Working with strings/Theory/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/Working with strings/Theory/task-remote-info.yaml b/Topics/Working with strings/Theory/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Working with strings/Theory/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 12561
++update_date: "Thu, 02 Mar 2023 22:23:56 UTC"
+Index: Topics/Characters/Theory/task.html
+===================================================================
+diff --git a/Topics/Characters/Theory/task.html b/Topics/Characters/Theory/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Characters/Theory/task.html	
+@@ -0,0 +1,52 @@
++<h2>Characters</h2>
++<div class="step-text">
++<p>In this topic, you will learn how to work with characters in Kotlin. This is a pretty fundamental concept, and being familiar with it will help you better understand how to work with texts.</p><h5 id="what-is-a-character">What is a character</h5><p>Each character is just a symbol enclosed in single quotes. The <code class="language-kotlin">Char</code> type represents letters (both uppercase and lowercase), digits, and other symbols:</p><pre><code class="language-kotlin">val lowerCaseLetter: Char = 'a'
++val upperCaseLetter: Char = 'Q'
++val number: Char = '1'
++val space: Char = ' '
++val dollar: Char = '$'</code></pre><p>This type can represent any symbol including hieroglyphs, as well as some special symbols.</p><p>A character can also be represented by its hexadecimal code in the <a href="https://unicode-table.com/en/" rel="noopener noreferrer nofollow" target="_blank">Unicode table</a>. The code starts with <code class="language-kotlin">\u</code>:</p><pre><code class="language-kotlin">val ch = '\u0040' // it represents '@'
++println(ch) // @</code></pre><p>Although we use a sequence of characters to represent such code, the code itself represents exactly one character.</p><p>For example, Latin capital letters have hexadecimal codes from <code class="language-kotlin">'\u0041'</code> to <code class="language-kotlin">'\u005A'</code>, and Latin lowercase letters have codes ranging from <code class="language-kotlin">'\u0061'</code> to <code class="language-kotlin">'\u007A'</code>.</p><p>You can also convert numbers to characters and vice versa. Let's take a look at how it works:</p><pre><code class="language-kotlin">val ch = 'a'
++println(ch.code)   // 97
++val num = 97
++println(num.toChar()) // a</code></pre><h5 id="how-to-read-characters">How to read characters</h5><p>Kotlin does not provide a convenient function to read a <code class="language-kotlin">Char</code>. However, you can do it another way: if you need to read one <code class="language-kotlin">Char</code> in a whole line, use this construction:</p><pre><code class="language-kotlin">val ch: Char = readln().first()</code></pre><p>You just read a <code class="language-kotlin">String</code> and get its first element, which will be a <code class="language-kotlin">Char</code>. Strings are composed of characters, but we will discuss this in more detail a little later.</p><h5 id="retrieving-subsequent-characters">Retrieving subsequent characters</h5><p>There are two operators for adding (<code class="language-kotlin">+</code>) and subtracting (<code class="language-kotlin">-</code>) integer numbers in order to get the next and previous characters according to the Unicode order:</p><pre><code class="language-kotlin">val ch1 = 'b'
++val ch2 = ch1 + 1 // 'c'
++val ch3 = ch2 - 2 // 'a'</code></pre><p>Remember that you cannot add a symbol to a number as it will cause an error.</p><pre><code class="language-kotlin">val ch = 'a'
++val ch1 = 1 + ch // Error</code></pre><p>You also cannot sum up two characters:</p><pre><code class="language-kotlin">val charsSum = 'a' + 'b' // Error</code></pre><p>It is possible to use the increment (<code class="language-kotlin">++</code>) and decrement (<code class="language-kotlin">--</code>) operators in their prefix and postfix forms. The assignment operator combined with <code class="language-kotlin">+</code> or <code class="language-kotlin">-</code> also works for characters, as well as <code class="language-kotlin">+=</code> and <code class="language-kotlin">-=</code>.</p><pre><code class="language-kotlin">var ch = 'A'
++
++ch += 10
++println(ch)   // 'K'
++println(++ch) // 'L'
++println(++ch) // 'M'
++println(--ch) // 'L'
++</code></pre><p></p><div class="alert alert-warning"><p>You cannot multiply or divide characters by numbers.</p></div><p></p><h5 id="escape-sequences">Escape sequences</h5><p>There are some special characters starting with a backslash <code class="language-kotlin">\</code>, which are known as <strong>escape</strong> or <strong>control sequences</strong>. Most of them do not have corresponding symbols, and you cannot find them on your keyboard. To represent such characters, we use a pair of regular symbols. In a program, this pair is considered as exactly one character with the appropriate code. </p><ul><li><p><code class="language-kotlin">'\n'</code> is the newline character;</p></li><li><p><code class="language-kotlin">'\t'</code> is the tab character;</p></li><li><p><code class="language-kotlin">'\r'</code> is the carriage return character;</p></li><li><p><code class="language-kotlin">'\\'</code> is the backslash character itself;</p></li><li><p><code class="language-kotlin">'\''</code> is the single quote mark;</p></li><li><p><code class="language-kotlin">'\"'</code> is the double quote mark.</p></li></ul><p>Here are a few examples:</p><pre><code class="language-java">print('\t') // makes a tab
++print('a')  // prints 'a'
++print('\n') // goes to a new line
++print('c')  // prints 'c'</code></pre><p>The above code will print:</p><pre><code class="language-java">  a
++c</code></pre><p></p><div class="alert alert-primary"><p>Note: there is also a character to represent a single space <code class="language-kotlin">' '</code>. It is just a regular character, not an escape sequence.</p></div><p></p><h5 id="relational-operations-with-characters">Relational operations with characters</h5><p>You can compare characters using relational operations (<code class="language-kotlin">==</code>, <code class="language-kotlin">&lt;</code>, <code class="language-kotlin">&gt;</code>, <code class="language-kotlin">&lt;=</code>, <code class="language-kotlin">&gt;=</code>, and <code class="language-kotlin">!=</code>) according to their position in the Unicode table.</p><pre><code class="language-kotlin">println('a' &lt; 'c')  // true
++println('x' &gt;= 'z') // false
++
++println('D' == 'D') // true
++println('Q' != 'q') // true because capital and small letters are not the same
++
++println('A' &lt; 'a')  // true because capital Latin letters are placed before small ones</code></pre><p>Using relational operations and codes, we can check whether a <code class="language-kotlin">Char</code> is a digit: all ten digits have codes from <code class="language-kotlin">'\u0030'</code> to <code class="language-kotlin">'\u0039'</code>.</p><p>Here is a program that does it:</p><pre><code class="language-kotlin">fun main() {
++    val ch = readln().first()
++    val isDigit = ch &gt;= '\u0030' &amp;&amp; ch &lt;= '\u0039'
++
++    println(isDigit)
++}</code></pre><p>If the input is a digit <code class="language-kotlin">'0'</code>, <code class="language-kotlin">'1'</code>, <code class="language-kotlin">'2'</code>, ..., <code class="language-kotlin">'9'</code> (without quotes), the program prints <code class="language-kotlin">true</code>. Otherwise, it prints <code class="language-kotlin">false</code>. </p><h5 id="processing-characters">Processing characters</h5><p>There's a variety of useful functions to work with characters. You can use these functions instead of dealing with character codes.</p><ul><li><p><code class="language-kotlin">isDigit()</code> returns <code class="language-kotlin">true</code> if the given character represents a digit (<code class="language-kotlin">'1'</code>, <code class="language-kotlin">'2'</code>, etc); otherwise, <code class="language-kotlin">false</code>;</p></li><li><p><code class="language-kotlin">isLetter()</code> returns <code class="language-kotlin">true</code> if the given character represents a letter (<code class="language-kotlin">'a'</code>, <code class="language-kotlin">'B'</code>, <code class="language-kotlin">'m'</code>, etc); otherwise, <code class="language-kotlin">false</code>;</p></li><li><p><code class="language-kotlin">isLetterOrDigit()</code> returns <code class="language-kotlin">true</code> if the given character represents a letter or a digit; otherwise, <code class="language-kotlin">false</code>;</p></li><li><p><code class="language-kotlin">isWhitespace()</code> returns <code class="language-kotlin">true</code> if the given character represents a whitespace (<code class="language-kotlin">' '</code>, or <code class="language-kotlin">'\t'</code>, or <code class="language-kotlin">'\n'</code>); otherwise, <code class="language-kotlin">false</code>;</p></li><li><p><code class="language-kotlin">isUpperCase()</code> returns <code class="language-kotlin">true</code> if the given character is an uppercase character; otherwise, <code class="language-kotlin">false</code>;</p></li><li><p><code class="language-kotlin">isLowerCase()</code> returns <code class="language-kotlin">true</code> if the given character is a lowercase character; otherwise, <code class="language-kotlin">false</code>;</p></li><li><p><code class="language-kotlin">toUpperCase()</code> returns the uppercase form of the given character (before Kotlin 1.5; you shouldn't use it nowadays);</p></li><li><p><code class="language-kotlin">uppercaseChar()</code> returns the uppercase form of the given character (since Kotlin 1.5);</p></li><li><p><code class="language-kotlin">uppercase()</code> returns a <code class="language-kotlin">String</code> with the uppercase form of the given character (since Kotlin 1.5);</p></li><li><p><code class="language-kotlin">toLowerCase()</code> returns the lowercase form of the given character (before Kotlin 1.5; you shouldn't use it nowadays);</p></li><li><p><code class="language-kotlin">lowercaseChar()</code> returns the lowercase form of the given character (since Kotlin 1.5);</p></li><li><p><code class="language-kotlin">lowercase()</code> returns a <code class="language-kotlin">String</code> with the lowercase form of the given character (since Kotlin 1.5).</p></li></ul><p>Let's take a look at some examples of the functions listed above:</p><pre><code class="language-kotlin">val one = '1'
++
++val isDigit = one.isDigit()   // true
++val isLetter = one.isLetter() // false
++
++val capital = 'A'
++val small = 'e'
++
++val isLetterOrDigit = capital.isLetterOrDigit() // true
++
++val isUpperCase = capital.isUpperCase() // true
++val isLowerCase = capital.isLowerCase() // false
++
++val capitalEString = small.uppercase() // "E"
++val capitalE = small.uppercaseChar()   // 'E'
++</code></pre><p>There are a lot more useful functions: we will discuss them in the upcoming topics.</p><h5 id="conclusion">Conclusion</h5><p>In this topic, we've learned a few things about characters. In particular, we looked at the <code class="language-kotlin">Char</code> type, various operators, escape sequences, and functions, and also learned what Unicode is. Now let's practice!</p>
++</div>
+Index: Topics/Working with strings/Name Card/task-info.yaml
+===================================================================
+diff --git a/Topics/Working with strings/Name Card/task-info.yaml b/Topics/Working with strings/Name Card/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Working with strings/Name Card/task-info.yaml	
+@@ -0,0 +1,16 @@
++type: code
++files:
++- name: src/Main.kt
++  visible: true
++  text: |-
++    fun main() {
++        // put your code here
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/12566#comment
++status: Solved
++feedback:
++  message: <html>Correct solution</html>
++  time: "Fri, 14 Apr 2023 02:47:36 UTC"
++record: -1
++submission_language: kotlin
+Index: Topics/Working with strings/Name Card/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/Working with strings/Name Card/task-remote-info.yaml b/Topics/Working with strings/Name Card/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Working with strings/Name Card/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 12566
++update_date: "Thu, 02 Mar 2023 22:23:58 UTC"
+Index: Topics/Working with strings/Last symbol/task-info.yaml
+===================================================================
+diff --git a/Topics/Working with strings/Last symbol/task-info.yaml b/Topics/Working with strings/Last symbol/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Working with strings/Last symbol/task-info.yaml	
+@@ -0,0 +1,23 @@
++type: choice
++is_multiple_choice: true
++options:
++- text: "print(someText[someText.length])"
++- text: "print(someText{someText - 1})"
++- text: print(someText.last())
++- text: "print(someText[someText.length - 1])"
++files:
++- name: src/Main.kt
++  visible: true
++  text: |
++    // You can experiment here, it won’t be checked
++
++    fun main(args: Array<String>) {
++      // put your code here
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/18839#comment
++status: Solved
++record: -1
++selected_options:
++- 1
++local_check: false
+Index: Topics/Working with strings/Last symbol/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/Working with strings/Last symbol/task-remote-info.yaml b/Topics/Working with strings/Last symbol/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Working with strings/Last symbol/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 18839
++update_date: "Sat, 19 Nov 2022 23:31:19 UTC"
+Index: Topics/Working with strings/Extraction of a character/task-info.yaml
+===================================================================
+diff --git a/Topics/Working with strings/Extraction of a character/task-info.yaml b/Topics/Working with strings/Extraction of a character/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Working with strings/Extraction of a character/task-info.yaml	
+@@ -0,0 +1,21 @@
++type: choice
++is_multiple_choice: false
++options:
++- text: "{ }"
++- text: "[ ]"
++- text: '&lt;&gt;'
++- text: ( )
++files:
++- name: src/Main.kt
++  visible: true
++  text: |
++    // You can experiment here, it won’t be checked
++
++    fun main(args: Array<String>) {
++      // put your code here
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/4542#comment
++status: Unchecked
++record: -1
++local_check: false
+Index: Topics/Characters/Sequence/task.html
+===================================================================
+diff --git a/Topics/Characters/Sequence/task.html b/Topics/Characters/Sequence/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Characters/Sequence/task.html	
+@@ -0,0 +1,6 @@
++<h2>Sequence</h2>
++<div class="step-text">
++<p>Write a program that reads three characters and checks if they are ordered according to <a target="_blank" target="_blank" target="_blank" target="_blank" href="https://unicode-table.com/en/" rel="nofollow noopener noreferrer">the Unicode table,</a> and if each next character immediately follows the previous one (i.e. <code class="java">'a'</code>, <code class="java">'b'</code>, <code class="java">'c'</code> or <code class="java">'x'</code>, <code class="java">'y'</code>, <code class="java">'z'</code>) according to the alphabet.</p>
++
++<p>The program must print either <code class="java">true</code> or <code class="java">false</code>.</p><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">a<br>b<br>c</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">true</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">c<br>b<br>a</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">false</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">a<br>b<br>d</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">false</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">x<br>y<br>z</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">true</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
++</div>
+Index: Topics/Working with strings/Extraction of a character/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/Working with strings/Extraction of a character/task-remote-info.yaml b/Topics/Working with strings/Extraction of a character/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Working with strings/Extraction of a character/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 4542
++update_date: "Mon, 20 Feb 2023 18:33:12 UTC"
+Index: Topics/Characters/Theory/task-info.yaml
+===================================================================
+diff --git a/Topics/Characters/Theory/task-info.yaml b/Topics/Characters/Theory/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Characters/Theory/task-info.yaml	
+@@ -0,0 +1,15 @@
++type: theory
++files:
++- name: src/Main.kt
++  visible: true
++  text: |
++    // You can experiment here, it won’t be checked
++
++    fun main(args: Array<String>) {
++      // put your code here
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/4680#comment
++status: Solved
++record: -1
++post_submission_on_open: true
+Index: Topics/Characters/Operations allowed/task.html
+===================================================================
+diff --git a/Topics/Characters/Operations allowed/task.html b/Topics/Characters/Operations allowed/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Characters/Operations allowed/task.html	
+@@ -0,0 +1,9 @@
++<h2>Operations allowed</h2>
++<div class="step-text">
++<p>There are two variables:</p>
++
++<pre><code class="language-kotlin">val c: Char = ...
++val n: Int = ...</code></pre>
++
++<p>Which operations are possible?</p>
++</div>
+Index: Topics/Characters/Theory/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/Characters/Theory/task-remote-info.yaml b/Topics/Characters/Theory/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Characters/Theory/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 4680
++update_date: "Fri, 10 Feb 2023 00:56:22 UTC"
+Index: Topics/Characters/Operations allowed/task-info.yaml
+===================================================================
+diff --git a/Topics/Characters/Operations allowed/task-info.yaml b/Topics/Characters/Operations allowed/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Characters/Operations allowed/task-info.yaml	
+@@ -0,0 +1,21 @@
++type: choice
++is_multiple_choice: true
++options:
++- text: c + n
++- text: c * n
++- text: c - n
++- text: c / n
++files:
++- name: src/Main.kt
++  visible: true
++  text: |
++    // You can experiment here, it won’t be checked
++
++    fun main(args: Array<String>) {
++      // put your code here
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/4682#comment
++status: Solved
++record: -1
++local_check: false
+Index: Topics/Characters/Operations allowed/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/Characters/Operations allowed/task-remote-info.yaml b/Topics/Characters/Operations allowed/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Characters/Operations allowed/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 4682
++update_date: "Tue, 11 Jan 2022 08:12:13 UTC"
+Index: Topics/Characters/Compare Latin letters/task-info.yaml
+===================================================================
+diff --git a/Topics/Characters/Compare Latin letters/task-info.yaml b/Topics/Characters/Compare Latin letters/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Characters/Compare Latin letters/task-info.yaml	
+@@ -0,0 +1,13 @@
++type: code
++files:
++- name: src/Main.kt
++  visible: true
++  text: |-
++    fun main() {
++        // write your code here
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/4686#comment
++status: Solved
++record: -1
++submission_language: kotlin
+Index: Topics/Characters/Compare Latin letters/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/Characters/Compare Latin letters/task-remote-info.yaml b/Topics/Characters/Compare Latin letters/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Characters/Compare Latin letters/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 4686
++update_date: "Wed, 05 Jan 2022 04:04:20 UTC"
+Index: Topics/Characters/Sequence/task-info.yaml
+===================================================================
+diff --git a/Topics/Characters/Sequence/task-info.yaml b/Topics/Characters/Sequence/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Characters/Sequence/task-info.yaml	
+@@ -0,0 +1,16 @@
++type: code
++files:
++- name: src/Main.kt
++  visible: true
++  text: |-
++    fun main() {
++        // put your code here
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/4688#comment
++status: Solved
++feedback:
++  message: <html>Correct solution</html>
++  time: "Sat, 15 Apr 2023 22:31:17 UTC"
++record: -1
++submission_language: kotlin
+Index: Topics/Characters/Sequence/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/Characters/Sequence/task-remote-info.yaml b/Topics/Characters/Sequence/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Characters/Sequence/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 4688
++update_date: "Thu, 06 Jan 2022 16:30:10 UTC"
+Index: Topics/Characters/Comparing numbers and characters/task.html
+===================================================================
+diff --git a/Topics/Characters/Comparing numbers and characters/task.html b/Topics/Characters/Comparing numbers and characters/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Characters/Comparing numbers and characters/task.html	
+@@ -0,0 +1,5 @@
++<h2>Comparing numbers and characters</h2>
++<div class="step-text">
++<p>Write a program that reads one number and one character on separate lines and checks whether the entered number corresponds to the decimal representation of the character in the Unicode table.</p>
++<p>If the input character is represented by the input number, print <code class="java">true</code>; otherwise, print <code class="java">false</code>.</p><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">97<br>a</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">true</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">97<br>C</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">false</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
++</div>
+Index: Topics/Characters/Comparing numbers and characters/task-info.yaml
+===================================================================
+diff --git a/Topics/Characters/Comparing numbers and characters/task-info.yaml b/Topics/Characters/Comparing numbers and characters/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Characters/Comparing numbers and characters/task-info.yaml	
+@@ -0,0 +1,13 @@
++type: code
++files:
++- name: src/Main.kt
++  visible: true
++  text: |-
++    fun main() {
++        // write your code here
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/12309#comment
++status: Solved
++record: -1
++submission_language: kotlin
+Index: Topics/Characters/Comparing numbers and characters/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/Characters/Comparing numbers and characters/task-remote-info.yaml b/Topics/Characters/Comparing numbers and characters/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Characters/Comparing numbers and characters/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 12309
++update_date: "Sun, 05 Feb 2023 19:32:22 UTC"
+Index: Topics/Ranges/Theory/task-info.yaml
+===================================================================
+diff --git a/Topics/Ranges/Theory/task-info.yaml b/Topics/Ranges/Theory/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Ranges/Theory/task-info.yaml	
+@@ -0,0 +1,15 @@
++type: theory
++files:
++- name: src/Main.kt
++  visible: true
++  text: |
++    // You can experiment here, it won’t be checked
++
++    fun main(args: Array<String>) {
++      // put your code here
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/4633#comment
++status: Solved
++record: -1
++post_submission_on_open: true
+Index: Topics/Characters/Compare Latin letters/task.html
+===================================================================
+diff --git a/Topics/Characters/Compare Latin letters/task.html b/Topics/Characters/Compare Latin letters/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Characters/Compare Latin letters/task.html	
+@@ -0,0 +1,4 @@
++<h2>Compare Latin letters</h2>
++<div class="step-text">
++<p>Write a program that reads two Latin letters as characters and compares them ignoring cases. If these characters represent the same letter print <code class="java">true</code> , otherwise <code class="java">false</code>.</p><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">a<br>b</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">false</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">d<br>D</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">true</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
++</div>
+Index: Topics/Ranges/Theory/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/Ranges/Theory/task-remote-info.yaml b/Topics/Ranges/Theory/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Ranges/Theory/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 4633
++update_date: "Thu, 06 Jan 2022 01:16:20 UTC"
+Index: Topics/Ranges/Check the value/task-info.yaml
+===================================================================
+diff --git a/Topics/Ranges/Check the value/task-info.yaml b/Topics/Ranges/Check the value/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Ranges/Check the value/task-info.yaml	
+@@ -0,0 +1,22 @@
++type: choice
++is_multiple_choice: true
++options:
++- text: 16 in range
++- text: 17 in range
++- text: 18 in range
++- text: 19 in range
++- text: 20 in range
++files:
++- name: src/Main.kt
++  visible: true
++  text: |
++    // You can experiment here, it won’t be checked
++
++    fun main(args: Array<String>) {
++      // put your code here
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/4635#comment
++status: Solved
++record: -1
++local_check: false
+Index: Topics/Ranges/Check the value/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/Ranges/Check the value/task-remote-info.yaml b/Topics/Ranges/Check the value/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Ranges/Check the value/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 4635
++update_date: "Fri, 14 Jan 2022 18:08:51 UTC"
+Index: Topics/Ranges/Check the value (1)/task-info.yaml
+===================================================================
+diff --git a/Topics/Ranges/Check the value (1)/task-info.yaml b/Topics/Ranges/Check the value (1)/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Ranges/Check the value (1)/task-info.yaml	
+@@ -0,0 +1,23 @@
++type: choice
++is_multiple_choice: true
++options:
++- text: 9 in range
++- text: 10 in range
++- text: 11 in range
++- text: 12 in range
++- text: 13 in range
++files:
++- name: src/Main.kt
++  visible: true
++  text: |
++    // You can experiment here, it won’t be checked
++
++    fun main(args: Array<String>) {
++      // put your code here
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/4636#comment
++status: Solved
++record: -1
++custom_name: Check the value
++local_check: false
+Index: Topics/Ranges/At least one/task.html
+===================================================================
+diff --git a/Topics/Ranges/At least one/task.html b/Topics/Ranges/At least one/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Ranges/At least one/task.html	
+@@ -0,0 +1,4 @@
++<h2>At least one</h2>
++<div class="step-text">
++<html><body><p>Write a program that reads five integer numbers. The first and the second numbers create one range, and the third and the fourth ones create another range. Output <code class="java">true</code> if the fifth number is in at least one of these ranges, otherwise output <code class="java">false</code>.</p></body></html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">1<br>2<br>5<br>6<br>2</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">true</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">0<br>5<br>6<br>8<br>10</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">false</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
++</div>
+Index: Topics/Ranges/Check the value (1)/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/Ranges/Check the value (1)/task-remote-info.yaml b/Topics/Ranges/Check the value (1)/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Ranges/Check the value (1)/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 4636
++update_date: "Fri, 07 Jan 2022 05:59:31 UTC"
+Index: Topics/Ranges/At least one/task-info.yaml
+===================================================================
+diff --git a/Topics/Ranges/At least one/task-info.yaml b/Topics/Ranges/At least one/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Ranges/At least one/task-info.yaml	
+@@ -0,0 +1,16 @@
++type: code
++files:
++- name: src/Main.kt
++  visible: true
++  text: |-
++    fun main() {
++        // write your code here
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/20136#comment
++status: Solved
++feedback:
++  message: <html>Correct solution</html>
++  time: "Sat, 15 Apr 2023 23:28:20 UTC"
++record: -1
++submission_language: kotlin
+Index: Topics/Ranges/Check the value/task.html
+===================================================================
+diff --git a/Topics/Ranges/Check the value/task.html b/Topics/Ranges/Check the value/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Ranges/Check the value/task.html	
+@@ -0,0 +1,12 @@
++<h2>Check the value</h2>
++<div class="step-text">
++<p>There is a range of integer numbers:</p>
++
++<p> </p>
++
++<pre><code class="language-kotlin">val range = 17..19</code></pre>
++
++<p> </p>
++
++<p>Select all the correct options.</p>
++</div>
+Index: Topics/Ranges/At least one/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/Ranges/At least one/task-remote-info.yaml b/Topics/Ranges/At least one/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Ranges/At least one/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 20136
++update_date: "Sat, 11 Jun 2022 12:01:51 UTC"
+Index: Topics/Ranges/Not in range/task-info.yaml
+===================================================================
+diff --git a/Topics/Ranges/Not in range/task-info.yaml b/Topics/Ranges/Not in range/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Ranges/Not in range/task-info.yaml	
+@@ -0,0 +1,17 @@
++type: code
++files:
++- name: src/Main.kt
++  visible: true
++  text: |-
++    fun main() {
++        // write your code here
++
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/20135#comment
++status: Solved
++feedback:
++  message: <html>Correct solution</html>
++  time: "Sat, 15 Apr 2023 23:33:27 UTC"
++record: -1
++submission_language: kotlin
+Index: Topics/Ranges/Not in range/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/Ranges/Not in range/task-remote-info.yaml b/Topics/Ranges/Not in range/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Ranges/Not in range/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 20135
++update_date: "Wed, 15 Jun 2022 13:15:15 UTC"
+Index: Topics/Ranges/Working hours/task-info.yaml
+===================================================================
+diff --git a/Topics/Ranges/Working hours/task-info.yaml b/Topics/Ranges/Working hours/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Ranges/Working hours/task-info.yaml	
+@@ -0,0 +1,20 @@
++type: code
++files:
++- name: src/Main.kt
++  visible: true
++  text: |-
++    fun main() {
++        val time = readln().toInt()
++        val workTime = 9..18
++        val lunchTime = 13..14
++        // do not change the code above
++        // put your code here
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/24244#comment
++status: Solved
++feedback:
++  message: <html>Correct solution</html>
++  time: "Sat, 15 Apr 2023 23:36:43 UTC"
++record: -1
++submission_language: kotlin
+Index: Topics/Ranges/Working hours/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/Ranges/Working hours/task-remote-info.yaml b/Topics/Ranges/Working hours/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Ranges/Working hours/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 24244
++update_date: "Mon, 12 Dec 2022 08:35:51 UTC"
+Index: Topics/Ranges/Within both ranges/task-info.yaml
+===================================================================
+diff --git a/Topics/Ranges/Within both ranges/task-info.yaml b/Topics/Ranges/Within both ranges/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Ranges/Within both ranges/task-info.yaml	
+@@ -0,0 +1,16 @@
++type: code
++files:
++- name: src/Main.kt
++  visible: true
++  text: |-
++    fun main() {
++        // write your code here
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/4678#comment
++status: Solved
++feedback:
++  message: <html>Correct solution</html>
++  time: "Sun, 16 Apr 2023 21:41:05 UTC"
++record: -1
++submission_language: kotlin
+Index: Topics/Ranges/Within both ranges/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/Ranges/Within both ranges/task-remote-info.yaml b/Topics/Ranges/Within both ranges/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Ranges/Within both ranges/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 4678
++update_date: "Fri, 07 Jan 2022 05:55:10 UTC"
+Index: Topics/Ranges/Check the value (1)/task.html
+===================================================================
+diff --git a/Topics/Ranges/Check the value (1)/task.html b/Topics/Ranges/Check the value (1)/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Ranges/Check the value (1)/task.html	
+@@ -0,0 +1,14 @@
++<h2>Check the value</h2>
++<div class="step-text">
++<p>There are three variables:</p>
++
++<p> </p>
++
++<pre><code class="language-kotlin">val a = 10
++val b = 12
++val range = a..b - 1</code></pre>
++
++<p> </p>
++
++<p>Select all correct options.</p>
++</div>
+Index: Topics/Ranges/Theory/task.html
+===================================================================
+diff --git a/Topics/Ranges/Theory/task.html b/Topics/Ranges/Theory/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Ranges/Theory/task.html	
+@@ -0,0 +1,49 @@
++<h2>Ranges</h2>
++<div class="step-text">
++<p>Imagine a situation when you need to check whether the integer variable <code class="language-kotlin">c</code> is greater than or equal to <code class="language-kotlin">a</code> and less than or equal to <code class="language-kotlin">b</code>. To do that you may write something like this:</p>
++
++<pre><code class="language-kotlin">val within = a &lt;= c &amp;&amp; c &lt;= b</code></pre>
++
++<p>This code works well. However, Kotlin provides a more convenient way to do the same thing using <strong>ranges</strong>:</p>
++
++<pre><code class="language-kotlin">val within = c in a..b
++</code></pre>
++
++<p>Here, <code class="language-kotlin">a..b</code> is a range of numbers from <code class="language-kotlin">a</code> to <code class="language-kotlin">b</code> (including both border values), <code class="language-kotlin">in</code> is a <strong>special keyword </strong>that is used to check whether a value is within a range. Later you will see that this keyword can be used with other types as well.</p>
++
++<p>The value of <code class="language-kotlin">within</code> is <code class="language-kotlin">true</code> if <code class="language-kotlin">c</code> belongs to the range inclusively, otherwise, it is <code class="language-kotlin">false</code>.</p>
++
++<p>Here are some examples:</p>
++
++<pre><code class="language-kotlin">println(5 in 5..15)  // true
++println(12 in 5..15) // true
++println(15 in 5..15) // true
++println(20 in 5..15) // false</code></pre>
++
++<p>If you need to exclude the right border, you may subtract 1 from it:</p>
++
++<pre><code class="language-kotlin">val withinExclRight = c in a..b - 1 // a &lt;= c &amp;&amp; c &lt; b</code></pre>
++
++<p>If you need to check that a value is not within a range, just add <code class="language-kotlin">!</code> (not) before <code class="language-kotlin">in</code>.</p>
++
++<pre><code class="language-kotlin">val notWithin = 100 !in 10..99 // true</code></pre>
++
++<p>You may combine ranges using standard logical operators. The code below checks if <code class="language-kotlin">c</code> is within one of three ranges.</p>
++
++<pre><code class="language-kotlin">val within = c in 5..10 || c in 20..30 || c in 40..50 // true if c is within at least one range</code></pre>
++
++<p>You can assign a range to a variable and use it later.</p>
++
++<pre><code class="language-kotlin">val range = 100..200
++println(300 in range) // false</code></pre>
++
++<p>In addition to integer ranges, you can also use ranges of characters and even strings (according to dictionary order).</p>
++
++<pre><code class="language-kotlin">println('b' in 'a'..'c') // true
++println('k' in 'a'..'e') // false
++
++println("hello" in "he".."hi") // true
++println("abc" in "aab".."aac") // false</code></pre>
++
++<p>This is enough to understand ranges for integer numbers and characters. We won't cover other type ranges here.</p>
++</div>
+Index: Topics/For loop and ranges/The roots of equation/task.html
+===================================================================
+diff --git a/Topics/For loop and ranges/The roots of equation/task.html b/Topics/For loop and ranges/The roots of equation/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/For loop and ranges/The roots of equation/task.html	
+@@ -0,0 +1,4 @@
++<h2>The roots of equation</h2>
++<div class="step-text">
++<p></p><p>There are numbers <span class="math-tex">\(a, b, c, d\)</span>. Output in ascending order all the integers between <span class="math-tex">\(0\)</span> and <span class="math-tex">\(1000\)</span> (inclusively), which are the roots of the equation <span class="math-tex">\(a \cdot x^3 + b \cdot x^2 + c \cdot x + d = 0\)</span>. The roots of a cubic equation are the values of the variable that satisfy the equation.</p><p>If a specified interval does not contain any roots of the equation, do not output anything.</p><p>Hint</p><details><div><p>You can just iterate over x from 0 to 1000 and check the value of the expression.</p></div></details><p></p><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">-1<br>1<br>-1<br>1</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">1</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">0<br>1<br>-6<br>5</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">1<br>5</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">1<br>1<br>1<br>1</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight"></code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>
++</div>
+Index: Topics/For loop and ranges/The roots of equation/task-info.yaml
+===================================================================
+diff --git a/Topics/For loop and ranges/The roots of equation/task-info.yaml b/Topics/For loop and ranges/The roots of equation/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/For loop and ranges/The roots of equation/task-info.yaml	
+@@ -0,0 +1,16 @@
++type: code
++files:
++- name: src/Main.kt
++  visible: true
++  text: |-
++    fun main() {
++        // put your code here
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/4656#comment
++status: Solved
++feedback:
++  message: <html>Correct solution</html>
++  time: "Sun, 16 Apr 2023 23:10:30 UTC"
++record: -1
++submission_language: kotlin
+Index: Topics/For loop and ranges/The roots of equation/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/For loop and ranges/The roots of equation/task-remote-info.yaml b/Topics/For loop and ranges/The roots of equation/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/For loop and ranges/The roots of equation/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 4656
++update_date: "Wed, 08 Mar 2023 02:17:26 UTC"
+Index: Topics/Ranges/Not in range/task.html
+===================================================================
+diff --git a/Topics/Ranges/Not in range/task.html b/Topics/Ranges/Not in range/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Ranges/Not in range/task.html	
+@@ -0,0 +1,4 @@
++<h2>Not in range</h2>
++<div class="step-text">
++<html><body><p>Read an <code class="java">Int</code> number. Write a program that prints <code class="java">false</code> if this number is between 1 and 10 (inclusive), and <code class="java">true</code> otherwise.</p></body></html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">5</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">false</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">0</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">true</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
++</div>
+Index: Topics/Ranges/Working hours/task.html
+===================================================================
+diff --git a/Topics/Ranges/Working hours/task.html b/Topics/Ranges/Working hours/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Ranges/Working hours/task.html	
+@@ -0,0 +1,7 @@
++<h2>Working hours</h2>
++<div class="step-text">
++<p></p>
++<p>The car wash works from 9 to 18 (we use a 24-hour clock format), and from 13 to 14, its employees take lunch to refuel and recharge for further work.<br/>
++As input, our program reads an integer, a positive number from the console, which is the desired time to make a reservation at the car wash, and checks whether the entered time is within the working hours.</p>
++<p>If the time is within the range of working hours, return <code class="java">true</code>, but if the time is during lunch or outside the working hours, return <code class="java">false</code>.</p><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">10</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">true</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">23</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">false</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
++</div>
+Index: Topics/Ranges/Within both ranges/task.html
+===================================================================
+diff --git a/Topics/Ranges/Within both ranges/task.html b/Topics/Ranges/Within both ranges/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Ranges/Within both ranges/task.html	
+@@ -0,0 +1,4 @@
++<h2>Within both ranges</h2>
++<div class="step-text">
++<p>Write a program that reads five integer numbers. The first and the second numbers create one range, the third and the fourth ones create another range. Output <code class="java">true</code> if the fifth number is within both these ranges, otherwise output <code class="java">false</code>.</p><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">10<br>30<br>20<br>40<br>25</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">true</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">10<br>20<br>30<br>40<br>25</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">false</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
++</div>
+Index: Topics/Standard output/Theory/task.html
+===================================================================
+diff --git a/Topics/Standard output/Theory/task.html b/Topics/Standard output/Theory/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Standard output/Theory/task.html	
+@@ -0,0 +1,54 @@
++<h2>Standard output</h2>
++<div class="step-text">
++<html><body><p><strong>Standard output</strong> is the basic operation that displays information on a device. Not every program generates such output. By default, the standard output displays the data on the screen, but it is possible to redirect it to a file.</p>
++<p>On Hyperskill, you will often write programs that send data, for example, strings and numbers, to the standard output.</p>
++<h5 id="printing-text" style="text-align: center;">Printing text</h5>
++<p>Kotlin has two functions that send data to the standard output: <code class="language-kotlin">println</code> and <code class="language-kotlin">print</code>.</p>
++<p>The <code class="language-kotlin">println</code> function (<strong>print line</strong>) displays <strong>a string </strong>followed by <strong>a new line </strong>on the screen. For example, the code snippet below prints four lines:</p>
++<pre><code class="language-kotlin">println("I")
++println("know")
++println("Kotlin")
++println("well.")
++</code></pre>
++<p><strong>Output:</strong></p>
++<pre><code class="language-java">I
++know
++Kotlin
++well.</code></pre>
++<p>As you can see, all strings are printed without double quotes.</p>
++<p>You can also print an empty line:</p>
++<pre><code class="language-kotlin">println("Kotlin is a modern programming language.")
++println() // prints an empty line
++println("It is used all over the world!")</code></pre>
++<p><strong>Output:</strong></p>
++<pre><code class="language-java">Kotlin is a modern programming language.
++
++It is used all over the world!</code></pre>
++<p>The <code class="language-kotlin">print</code> function displays <strong>a value </strong>and places the cursor<strong> </strong><strong>after</strong>. Let's look at the example below. This piece of code outputs all strings in a single line:</p>
++<pre><code class="language-kotlin">print("I ")
++print("know ")
++print("Kotlin ")
++print("well.")
++</code></pre>
++<p><strong>Output:</strong></p>
++<pre><code class="language-java">I know Kotlin well.</code></pre>
++<h5 id="printing-numbers-and-characters" style="text-align: center;">Printing numbers and characters</h5>
++<p>With <code class="language-kotlin">println</code> and <code class="language-kotlin">print</code> functions, a program can print not only strings but also <strong>numbers </strong>and <strong>characters</strong>.</p>
++<p>Let's print two secret codes:</p>
++<pre><code class="language-kotlin">print(108)   // prints a number
++print('c')   // prints a character
++print("Q")   // prints a string
++println('3') // prints a character that represents a digit 
++
++print(22)
++print('E')
++print(8)
++println('1')
++</code></pre>
++<p><strong>Output:</strong></p>
++<pre><code class="language-java">108cQ3
++22E81</code></pre>
++<p>Just like with strings, there are no quotes.</p>
++<h5 id="conclusion" style="text-align: center;">Conclusion</h5>
++<p>In this topic, we have covered two basic functions to redirect information to the standard output: <code class="language-kotlin">println</code> and <code class="language-kotlin">print</code>. <code class="language-kotlin">println</code> prints information followed by a new line, while <code class="language-kotlin">print</code> outputs them one after another. Remember, we can use these functions to output not only strings but also any other characters as well.</p></body></html>
++</div>
+Index: Topics/Standard output/First, second, third/task.html
+===================================================================
+diff --git a/Topics/Standard output/First, second, third/task.html b/Topics/Standard output/First, second, third/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Standard output/First, second, third/task.html	
+@@ -0,0 +1,10 @@
++<h2>First, second, third</h2>
++<div class="step-text">
++<p>Write a program that prints these three text lines in a column.</p>
++
++<p> </p>
++
++<pre><code class="language-java">first
++second
++third</code></pre><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
++</div>
+Index: Topics/For loop and ranges/The longest sequence/task.html
+===================================================================
+diff --git a/Topics/For loop and ranges/The longest sequence/task.html b/Topics/For loop and ranges/The longest sequence/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/For loop and ranges/The longest sequence/task.html	
+@@ -0,0 +1,9 @@
++<h2>The longest sequence</h2>
++<div class="step-text">
++<p>Write a program that reads N numbers and outputs the length of the longest sequence in non-descending order. By non-descending, we mean that the next element is either equal or greater than the previous one (A&lt;=B). Elements of the sequence are to follow one another.</p>
++<p><strong>Input format</strong></p>
++<p>The first line contains the positive integer number N (N&gt;0).<br/>
++The other lines contain N numbers.</p>
++<p><strong>Example</strong></p>
++<p>The input array is <code class="java">1 2 4 1 2 2 5 7 4 3</code>. In this case, the length of the longest sequence in non-descending order is <code class="java">5</code>. It includes these elements: <code class="java">1 2 2 5 7</code>.</p><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">10<br>1<br>2<br>4<br>1<br>2<br>2<br>5<br>7<br>4<br>3<br></code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">5</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
++</div>
+Index: Topics/For loop and ranges/The longest sequence/task-info.yaml
+===================================================================
+diff --git a/Topics/For loop and ranges/The longest sequence/task-info.yaml b/Topics/For loop and ranges/The longest sequence/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/For loop and ranges/The longest sequence/task-info.yaml	
+@@ -0,0 +1,16 @@
++type: code
++files:
++- name: src/Main.kt
++  visible: true
++  text: |-
++    fun main() {
++        // write your code here
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/4702#comment
++status: Solved
++feedback:
++  message: <html>Correct solution</html>
++  time: "Sun, 16 Apr 2023 23:03:12 UTC"
++record: -1
++submission_language: kotlin
+Index: Topics/For loop and ranges/The longest sequence/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/For loop and ranges/The longest sequence/task-remote-info.yaml b/Topics/For loop and ranges/The longest sequence/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/For loop and ranges/The longest sequence/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 4702
++update_date: "Fri, 30 Dec 2022 14:33:38 UTC"
+Index: Topics/Standard output/We need to learn Kotlin/task.html
+===================================================================
+diff --git a/Topics/Standard output/We need to learn Kotlin/task.html b/Topics/Standard output/We need to learn Kotlin/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Standard output/We need to learn Kotlin/task.html	
+@@ -0,0 +1,18 @@
++<h2>We need to learn Kotlin</h2>
++<div class="step-text">
++<p>Write a program that prints this text:</p>
++
++<pre><code class="java">WE NEED
++
++TO LEARN KOTLIN
++
++AS QUICKLY AS POSSIBLE</code></pre>
++
++<p><br>
++<button
++        class="btn-sm btn-outline-secondary"
++        onclick="getElementById('hint-129').style.display='inline'">
++        Hint
++      </button>
++      <div id="hint-129" style="display:none;">Do not forget to print empty lines.</div></p><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
++</div>
+Index: Topics/For loop and ranges/For-loop definitions/task.html
+===================================================================
+diff --git a/Topics/For loop and ranges/For-loop definitions/task.html b/Topics/For loop and ranges/For-loop definitions/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/For loop and ranges/For-loop definitions/task.html	
+@@ -0,0 +1,4 @@
++<h2>For-loop definitions</h2>
++<div class="step-text">
++<p>Choose all the correct ways to define a <code class="java">for</code> loop.</p>
++</div>
+Index: Topics/For loop and ranges/For-loop definitions/task-info.yaml
+===================================================================
+diff --git a/Topics/For loop and ranges/For-loop definitions/task-info.yaml b/Topics/For loop and ranges/For-loop definitions/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/For loop and ranges/For-loop definitions/task-info.yaml	
+@@ -0,0 +1,22 @@
++type: choice
++is_multiple_choice: true
++options:
++- text: "for (i in 1 to 10) {}"
++- text: "for (i in 1..10) {}"
++- text: "for (i in range(1, 5, 2)) {}"
++- text: "for (i in 0L until 40L step 2) {}"
++- text: "for (Double i in 1..10) {}"
++files:
++- name: src/Main.kt
++  visible: true
++  text: |
++    // You can experiment here, it won’t be checked
++
++    fun main(args: Array<String>) {
++      // put your code here
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/5969#comment
++status: Solved
++record: -1
++local_check: false
+Index: Topics/For loop and ranges/For-loop definitions/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/For loop and ranges/For-loop definitions/task-remote-info.yaml b/Topics/For loop and ranges/For-loop definitions/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/For loop and ranges/For-loop definitions/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 5969
++update_date: "Fri, 14 Jan 2022 19:16:11 UTC"
+Index: Topics/Standard output/Print a triangle/task.html
+===================================================================
+diff --git a/Topics/Standard output/Print a triangle/task.html b/Topics/Standard output/Print a triangle/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Standard output/Print a triangle/task.html	
+@@ -0,0 +1,11 @@
++<h2>Print a triangle</h2>
++<div class="step-text">
++<p></p>
++<p>Write a program that prints the following shape:</p>
++<pre><code class="java">#
++##
++###
++####
++#####
++######</code></pre><br><b>Sample Input:</b><br><pre><code class="language-no-highlight"><br></code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">#<br>##<br>###<br>####<br>#####<br>######</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
++</div>
+Index: Topics/Comments/Hello, Kotlin/task.html
+===================================================================
+diff --git a/Topics/Comments/Hello, Kotlin/task.html b/Topics/Comments/Hello, Kotlin/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Comments/Hello, Kotlin/task.html	
+@@ -0,0 +1,6 @@
++<h2>Hello, Kotlin</h2>
++<div class="step-text">
++<p>Add comments to the code so that the program outputs <strong>"Hello, Kotlin"</strong>.</p>
++
++<p><strong>Note,</strong> <code class="java">print</code> displays a string without a new line.</p><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
++</div>
+Index: Topics/Comments/Forms of comments/task.html
+===================================================================
+diff --git a/Topics/Comments/Forms of comments/task.html b/Topics/Comments/Forms of comments/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Comments/Forms of comments/task.html	
+@@ -0,0 +1,6 @@
++<h2>Forms of comments</h2>
++<div class="step-text">
++<p>You can see several lines that pretend to be comments. But which ones?</p>
++
++<p>Find all which are telling the truth.</p>
++</div>
+Index: Topics/Standard output/Printing texts/task.html
+===================================================================
+diff --git a/Topics/Standard output/Printing texts/task.html b/Topics/Standard output/Printing texts/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Standard output/Printing texts/task.html	
+@@ -0,0 +1,2 @@
++<h2>Printing texts</h2>
++Sorting tasks are not supported yet. <br>Solve this step on <a href="https://hyperskill.org/learn/step/23808">Hyperskill</a>. <br><br>After you have solved the step, click "Sync with Browser"  to move on.
+Index: Topics/Standard output/Theory/task-info.yaml
+===================================================================
+diff --git a/Topics/Standard output/Theory/task-info.yaml b/Topics/Standard output/Theory/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Standard output/Theory/task-info.yaml	
+@@ -0,0 +1,15 @@
++type: theory
++files:
++- name: src/Main.kt
++  visible: true
++  text: |
++    // You can experiment here, it won’t be checked
++
++    fun main(args: Array<String>) {
++      // put your code here
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/4425#comment
++status: Solved
++record: -1
++post_submission_on_open: true
+Index: Topics/Standard output/Theory/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/Standard output/Theory/task-remote-info.yaml b/Topics/Standard output/Theory/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Standard output/Theory/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 4425
++update_date: "Sat, 24 Sep 2022 11:31:19 UTC"
+Index: Topics/Standard output/First, second, third/task-info.yaml
+===================================================================
+diff --git a/Topics/Standard output/First, second, third/task-info.yaml b/Topics/Standard output/First, second, third/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Standard output/First, second, third/task-info.yaml	
+@@ -0,0 +1,13 @@
++type: code
++files:
++- name: src/Main.kt
++  visible: true
++  text: |-
++    fun main() {
++        TODO("Remove this line and write your solution here")
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/4432#comment
++status: Solved
++record: -1
++submission_language: kotlin
+Index: Topics/Standard output/First, second, third/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/Standard output/First, second, third/task-remote-info.yaml b/Topics/Standard output/First, second, third/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Standard output/First, second, third/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 4432
++update_date: "Tue, 04 Jan 2022 19:41:04 UTC"
+Index: Topics/Standard output/We need to learn Kotlin/task-info.yaml
+===================================================================
+diff --git a/Topics/Standard output/We need to learn Kotlin/task-info.yaml b/Topics/Standard output/We need to learn Kotlin/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Standard output/We need to learn Kotlin/task-info.yaml	
+@@ -0,0 +1,16 @@
++type: code
++files:
++- name: src/Main.kt
++  visible: true
++  text: |-
++    fun main() {
++        TODO("Remove this line and write your solution here")
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/4433#comment
++status: Solved
++feedback:
++  message: <html>Correct solution</html>
++  time: "Mon, 17 Apr 2023 20:35:31 UTC"
++record: -1
++submission_language: kotlin
+Index: Topics/Standard output/We need to learn Kotlin/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/Standard output/We need to learn Kotlin/task-remote-info.yaml b/Topics/Standard output/We need to learn Kotlin/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Standard output/We need to learn Kotlin/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 4433
++update_date: "Mon, 03 Jan 2022 22:58:26 UTC"
+Index: Topics/Standard output/Print a triangle/task-info.yaml
+===================================================================
+diff --git a/Topics/Standard output/Print a triangle/task-info.yaml b/Topics/Standard output/Print a triangle/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Standard output/Print a triangle/task-info.yaml	
+@@ -0,0 +1,13 @@
++type: code
++files:
++- name: src/Main.kt
++  visible: true
++  text: |-
++    fun main() {
++        // show me what you got...
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/15361#comment
++status: Solved
++record: -1
++submission_language: kotlin
+Index: Topics/Standard output/Print a triangle/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/Standard output/Print a triangle/task-remote-info.yaml b/Topics/Standard output/Print a triangle/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Standard output/Print a triangle/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 15361
++update_date: "Thu, 19 Jan 2023 09:03:36 UTC"
+Index: Topics/Standard output/Printing texts/task-info.yaml
+===================================================================
+diff --git a/Topics/Standard output/Printing texts/task-info.yaml b/Topics/Standard output/Printing texts/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Standard output/Printing texts/task-info.yaml	
+@@ -0,0 +1,14 @@
++type: unsupported
++files:
++- name: src/Main.kt
++  visible: true
++  text: |
++    // This is a sorting task. You can use this editor as a playground
++
++    fun main(args: Array<String>) {
++      // put your code here
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/23808#comment
++status: Solved
++record: -1
+Index: Topics/Standard output/Printing texts/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/Standard output/Printing texts/task-remote-info.yaml b/Topics/Standard output/Printing texts/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Standard output/Printing texts/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 23808
++update_date: "Tue, 07 Feb 2023 17:07:37 UTC"
+Index: Topics/Standard output/lesson-info.yaml
+===================================================================
+diff --git a/Topics/Standard output/lesson-info.yaml b/Topics/Standard output/lesson-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Standard output/lesson-info.yaml	
+@@ -0,0 +1,6 @@
++content:
++- Theory
++- "First, second, third"
++- We need to learn Kotlin
++- Print a triangle
++- Printing texts
+Index: Simple Chatty Bot (Kotlin)/lesson-info.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>type: framework\ncontent:\n- Chatty Bot welcomes you\n- Print your name\n- Guess the age\n- Learning numbers\n- Multiple choice\ncurrent_task: 1\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Simple Chatty Bot (Kotlin)/lesson-info.yaml b/Simple Chatty Bot (Kotlin)/lesson-info.yaml
+--- a/Simple Chatty Bot (Kotlin)/lesson-info.yaml	
++++ b/Simple Chatty Bot (Kotlin)/lesson-info.yaml	
+@@ -5,4 +5,4 @@
+ - Guess the age
+ - Learning numbers
+ - Multiple choice
+-current_task: 1
++current_task: 4
+Index: Topics/For loop and ranges/Theory/task.html
+===================================================================
+diff --git a/Topics/For loop and ranges/Theory/task.html b/Topics/For loop and ranges/Theory/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/For loop and ranges/Theory/task.html	
+@@ -0,0 +1,66 @@
++<h2>For loop and ranges</h2>
++<div class="step-text">
++<p>Often you need to do some action repeatedly. For example, if you want to find the sum of numbers from 1 to 100 (without formula), you need to add the numbers sequentially. To do this, you may use the <code class="language-kotlin">for</code> loop and ranges, which you are already familiar with. Let's take a closer look at this!</p><h5 id="for-loop">For loop</h5><p>Kotlin provides the <code class="language-kotlin">for</code> loop to iterate through ranges, arrays, and other collections of elements. We will meet them later.</p><p>This is the syntax the <code class="language-kotlin">for</code> loop has:</p><pre><code class="language-kotlin">for (element in source) {
++    // body of loop
++}</code></pre><p>The <strong>body</strong> of this loop consists of one or more statements that are executed for each <em>element</em> from the specified <em>source</em>. The loop stops after having processed the last element.</p><h5 id="iterating-through-a-range">Iterating through a range</h5><p>The simplest example of using the <code class="language-kotlin">for</code> loop is printing each element of an integer range.</p><pre><code class="language-kotlin">for (i in 1..4) {
++    println(i)    
++}</code></pre><p>This loop prints each number from 1 to 4.</p><pre><code class="language-no-highlight">1
++2
++3
++4</code></pre><p>It is also possible to iterate through a range of characters:</p><pre><code class="language-kotlin">for (ch in 'a'..'c') {
++    println(ch)
++}
++</code></pre><p>This loop prints:</p><pre><code class="language-no-highlight">a
++b
++c</code></pre><p>Note that we cannot use a string range such as <code class="language-kotlin">"da".."dd" </code>to get the desired result <code class="language-kotlin">"da" "db" "dc" "dd"</code>. In the range, we can only use single characters. From now on, all the examples will be about numbers because iterating through characters is always the same.</p><h5 id="iterating-through-a-string">Iterating through a String</h5><p>Also, you may iterate over strings. The following code prints each symbol of a <code class="language-kotlin">String</code>:</p><pre><code class="language-kotlin">val str = "Hello!"
++for (ch in str) {
++    println(ch)    
++}</code></pre><p>This code prints:</p><pre><code class="language-no-highlight">H
++e
++l
++l
++o
++!</code></pre><h5 id="iterating-in-the-backward-order">Iterating in the backward order</h5><p>You can also iterate a range in the backward order.</p><pre><code class="language-kotlin">for (i in 4 downTo 1) {
++    println(i)
++}
++</code></pre><p>This loop prints numbers from 4 to 1.</p><pre><code class="language-kotlin">4
++3
++2
++1</code></pre><p></p><div class="alert alert-warning"><p><strong>Note </strong>that it is required to use <code class="language-kotlin">in 4 downTo 1</code>, not <code class="language-kotlin">in 4..1</code>, to iterate the range in reverse order.</p></div><p></p><h5 id="excluding-the-upper-limit">Excluding the upper limit</h5><p>If we need to exclude the upper limit from a range, we can subtract one from it or write <code class="language-kotlin">until</code> instead of <code class="language-kotlin">..</code>:</p><pre><code class="language-kotlin">for (i in 1 until 4) {
++    println(i)
++}</code></pre><p>This loop prints numbers from 1 to 3.</p><h5 id="specifying-a-step">Specifying a step</h5><p>If we do not specify a step, it is assumed that the step is equal to one (e.g. <code class="language-kotlin">1, 2, 3, ...</code>). Although if we want to change the step, we need to specify it explicitly.</p><p>In the example below, we print only odd numbers from the range <code class="language-kotlin">1..7</code>.</p><pre><code class="language-kotlin">for (i in 1..7 step 2) {
++    println(i)
++}</code></pre><p>This loop prints four numbers:</p><pre><code class="language-kotlin">1
++3
++5
++7</code></pre><p>You can also use it for backward iteration.</p><pre><code class="language-kotlin">for (i in 7 downTo 1 step 2) {
++    println(i)
++}</code></pre><p>This loop prints:</p><pre><code class="language-kotlin">7
++5
++3
++1</code></pre><h5 id="an-example-the-factorial-of-a-number">An example: the factorial of a number</h5><p>Let's write a program that calculates the factorial of a given integer number. It's a classic. The factorial of <strong>n</strong> is a product of integer numbers from 1 to <strong>n</strong> inclusive. Assumed that factorial of 0 is 1. The factorial of 1 is 1 as well.</p><pre><code class="language-kotlin">fun main() {
++    val n = readln().toInt()
++    var result = 1 // starting value of the factorial
++
++    for (i in 2..n) { // the product from 2 to n
++        result *= i
++    }
++
++    println(result)
++}</code></pre><p>The program above reads an integer number from the standard input. We suppose that the starting value of the factorial is 1 and then sequentially multiply it by numbers from 2 to <strong>n</strong>. If the input number is 1, the result is 1. If the input number is 5, the result is 120.</p><h5 id="an-example-the-multiplication-table-of-even-numbers">An example: the multiplication table of even numbers</h5><p>You can nest one <code class="language-kotlin">for</code> loop in the body of another <code class="language-kotlin">for</code> loop because loops are just regular statements. Programmers often use nested loops to process multidimensional structures like tables (matrices), data cubes, and so on.</p><p>For example, the code below prints the multiplication table of even numbers from 2 to 10.</p><pre><code class="language-kotlin">fun main() {
++    for (i in 2..10 step 2) {
++        for (j in 2..10 step 2) {
++            print(i * j)
++            print('\t')  // print the product of i and j followed by one tab
++        }
++        println()
++    }
++}</code></pre><p>It prints:</p><pre><code class="language-java">4   8   12  16  20  
++8   16  24  32  40  
++12  24  36  48  60  
++16  32  48  64  80  
++20  40  60  80  100  </code></pre><h5 id="idiom">Idiom</h5><p>Almost everything in this topic is <a href="https://kotlinlang.org/docs/idioms.html#iterate-over-a-range" rel="noopener noreferrer nofollow" target="_blank">an idiom</a>! Different types of ranges may be difficult to understand, but they offer a really convenient and easy-to-read way to write code. Here we give you a quick reminder of the syntax for iterating over basic ranges:</p><pre><code class="language-kotlin">for (i in 1..6) { ... }        // closed range: 1, 2, 3, 4, 5, 6
++for (i in 1 until 6) { ... }   // half-open range: 1, 2, 3, 4, 5
++for (x in 1..6 step 2) { ... } // step 2: 1, 3, 5
++for (x in 6 downTo 1) { ... }  // closed range, backward order: 6, 5, 4, 3, 2, 1 </code></pre><h5 id="conclusion">Conclusion</h5><p>The for loop is a very powerful instrument. You will use it in almost all of your programs. Remember that all these types of ranges are available to you; they can be very convenient for some special cases. Good luck with the tasks! </p>
++</div>
+Index: Topics/For loop and ranges/The sum of integers from a to b/task.html
+===================================================================
+diff --git a/Topics/For loop and ranges/The sum of integers from a to b/task.html b/Topics/For loop and ranges/The sum of integers from a to b/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/For loop and ranges/The sum of integers from a to b/task.html	
+@@ -0,0 +1,4 @@
++<h2>The sum of integers from a to b</h2>
++<div class="step-text">
++<p>Read two integers <code class="java">a</code> and <code class="java">b</code>. Print the sum of all the integers from <code class="java">a</code> to<code class="java">b</code> inclusive. It is guaranteed that <code class="java">a</code> &lt;<code class="java">b</code>.</p><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">6<br>15<br></code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">105</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>
++</div>
+Index: Topics/For loop and ranges/Theory/task-info.yaml
+===================================================================
+diff --git a/Topics/For loop and ranges/Theory/task-info.yaml b/Topics/For loop and ranges/Theory/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/For loop and ranges/Theory/task-info.yaml	
+@@ -0,0 +1,15 @@
++type: theory
++files:
++- name: src/Main.kt
++  visible: true
++  text: |
++    // You can experiment here, it won’t be checked
++
++    fun main(args: Array<String>) {
++      // put your code here
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/4652#comment
++status: Solved
++record: -1
++post_submission_on_open: true
+Index: Topics/For loop and ranges/Theory/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/For loop and ranges/Theory/task-remote-info.yaml b/Topics/For loop and ranges/Theory/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/For loop and ranges/Theory/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 4652
++update_date: "Sun, 29 Jan 2023 18:22:42 UTC"
+Index: Topics/For loop and ranges/The sum of integers from a to b/task-info.yaml
+===================================================================
+diff --git a/Topics/For loop and ranges/The sum of integers from a to b/task-info.yaml b/Topics/For loop and ranges/The sum of integers from a to b/task-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/For loop and ranges/The sum of integers from a to b/task-info.yaml	
+@@ -0,0 +1,16 @@
++type: code
++files:
++- name: src/Main.kt
++  visible: true
++  text: |-
++    fun main() {
++        // put your code here
++    }
++  learner_created: false
++feedback_link: https://hyperskill.org/learn/step/4654#comment
++status: Solved
++feedback:
++  message: <html>Correct solution</html>
++  time: "Sun, 16 Apr 2023 22:47:18 UTC"
++record: -1
++submission_language: kotlin
+Index: Topics/Working with strings/Correct operations/task.html
+===================================================================
+diff --git a/Topics/Working with strings/Correct operations/task.html b/Topics/Working with strings/Correct operations/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Working with strings/Correct operations/task.html	
+@@ -0,0 +1,4 @@
++<h2>Correct operations</h2>
++<div class="step-text">
++<p></p><p>If you have two strings <code class="java">s1</code> and <code class="java">s2</code>, which of the following operations are correct?<br/></p>
++</div>
+Index: Topics/For loop and ranges/The sum of integers from a to b/task-remote-info.yaml
+===================================================================
+diff --git a/Topics/For loop and ranges/The sum of integers from a to b/task-remote-info.yaml b/Topics/For loop and ranges/The sum of integers from a to b/task-remote-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/For loop and ranges/The sum of integers from a to b/task-remote-info.yaml	
+@@ -0,0 +1,2 @@
++id: 4654
++update_date: "Fri, 14 Jan 2022 09:42:02 UTC"
+Index: Topics/Working with strings/Last symbol/task.html
+===================================================================
+diff --git a/Topics/Working with strings/Last symbol/task.html b/Topics/Working with strings/Last symbol/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Working with strings/Last symbol/task.html	
+@@ -0,0 +1,5 @@
++<h2>Last symbol</h2>
++<div class="step-text">
++<p></p>
++<p>You have a string <code class="java">someText</code>. Choose the correct ways to print the last character of the string:</p>
++</div>
+Index: Topics/For loop and ranges/lesson-info.yaml
+===================================================================
+diff --git a/Topics/For loop and ranges/lesson-info.yaml b/Topics/For loop and ranges/lesson-info.yaml
+new file mode 100644
+--- /dev/null	
++++ b/Topics/For loop and ranges/lesson-info.yaml	
+@@ -0,0 +1,6 @@
++content:
++- Theory
++- The sum of integers from a to b
++- The longest sequence
++- For-loop definitions
++- The roots of equation
+Index: Topics/Working with strings/Name Card/task.html
+===================================================================
+diff --git a/Topics/Working with strings/Name Card/task.html b/Topics/Working with strings/Name Card/task.html
+new file mode 100644
+--- /dev/null	
++++ b/Topics/Working with strings/Name Card/task.html	
+@@ -0,0 +1,5 @@
++<h2>Name Card</h2>
++<div class="step-text">
++<p></p>
++<p>Write a program that reads the first name and the last name of a person, each on a separate line. Then, print the first letter of the first name with a dot and then the last name (with a single space in between): for example, <em>Arthur Dent</em> would be <em>A. Dent</em>.</p><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">Jane<br>Doe</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">J. Doe</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
++</div>
