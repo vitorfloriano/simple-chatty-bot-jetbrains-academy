@@ -1,7 +1,4 @@
 # simple-chatty-bot-jetbrains-academy
-Another simple project aimed at beginners, for JetBrains Academy.
-
-# simple-chatty-bot-jetbrains-academy
 
 This is a simple project for beginners created for the JetBrains Academy. It involves building a chat bot that can interact with the user and perform basic tasks.
 
